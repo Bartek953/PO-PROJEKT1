@@ -1,6 +1,7 @@
 package pl.projekt.osrodek;
 
 import pl.projekt.cechy.Czas;
+import pl.projekt.sportowcy.Sportowiec;
 import pl.projekt.strukturydanych.ListowaKolejkaOczekujacych;
 
 public class Wyciag extends Polaczenie{
@@ -22,7 +23,21 @@ public class Wyciag extends Polaczenie{
 
         this.odstepCzasu = new Czas(0, 0, odstepCzasu);
         this.maksymalnaLiczbaOsob = maksymalnaLiczbaOsob;
+        kolejkaOczekujacych = new ListowaKolejkaOczekujacych();
 
         start().dodajWyciag(this);
+    }
+
+    public void dodajDoKolejki(Sportowiec sportowiec){
+        kolejkaOczekujacych.dodajNaKoniec(sportowiec);
+    }
+    public Sportowiec pierwszyWKolejce(){
+        return kolejkaOczekujacych.pierwszy();
+    }
+    public void usunPierwszegoZKolejki(){
+        kolejkaOczekujacych.usunPierwszy();
+    }
+    public boolean kolejkaPusta(){
+        return kolejkaOczekujacych.pusta();
     }
 }

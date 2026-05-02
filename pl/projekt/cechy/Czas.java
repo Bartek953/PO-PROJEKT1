@@ -46,6 +46,9 @@ public class Czas {
     public String toString(){
         StringBuilder wynik = new StringBuilder("");
 
+        if (godzina() < 10){
+            wynik.append(0);
+        }
         wynik.append(godzina());
         wynik.append(":");
 
