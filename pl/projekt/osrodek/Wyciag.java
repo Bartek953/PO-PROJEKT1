@@ -40,4 +40,10 @@ public class Wyciag extends Polaczenie{
     public boolean kolejkaPusta(){
         return kolejkaOczekujacych.pusta();
     }
+    public int maksymalnaLiczbaOsob(){
+        return maksymalnaLiczbaOsob;
+    }
+    public Czas odstepCzasu(){
+        return odstepCzasu;
+    }
 }
