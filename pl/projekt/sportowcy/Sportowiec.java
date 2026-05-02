@@ -1,6 +1,8 @@
 package pl.projekt.sportowcy;
 
 import pl.projekt.osrodek.Trasa;
+import pl.projekt.osrodek.Wezel;
+import pl.projekt.zdarzenia.Zdarzenie;
 
 import java.util.Random;
 
@@ -54,6 +56,14 @@ public class Sportowiec {
         double atrakcyjnoscNawierzchni = trasa.atrakcyjnoscNawierzchni();
 
         return wagi.lacznaAtrakcyjnosc(atrakcyjnoscTrudnosci, atrakcyjnoscNawierzchni);
+    }
+
+    public boolean sledzony(){
+        return sledzony;
+    }
+
+    public Zdarzenie decyzja(Wezel wezel){
+        return null;
     }
 
 }
