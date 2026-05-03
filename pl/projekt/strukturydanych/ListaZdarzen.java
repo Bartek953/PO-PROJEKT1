@@ -5,14 +5,14 @@ import pl.projekt.zdarzenia.Zdarzenie;
 import static java.lang.System.arraycopy;
 
 public class ListaZdarzen {
-    private static final int WSP_REALOKACJI = 2;
-    private static final int ROZMIAR_POCZATKOWY = 4;
+    private int wspRealokacji;
     private Zdarzenie[] listaZdarzen;
     private int rozmiar;
 
-    public ListaZdarzen(){
-        listaZdarzen = new Zdarzenie[ROZMIAR_POCZATKOWY];
+    public ListaZdarzen(int rozmiarPoczatkowy, int wspRealokacji){
+        listaZdarzen = new Zdarzenie[rozmiarPoczatkowy];
         rozmiar = 0;
+        this.wspRealokacji = wspRealokacji;
     }
 
     public int rozmiar(){
@@ -24,7 +24,7 @@ public class ListaZdarzen {
     }
 
     private void realokuj(){
-        int nowyRozmiar = listaZdarzen.length * WSP_REALOKACJI;
+        int nowyRozmiar = listaZdarzen.length * wspRealokacji;
 
         // potencjalnie blad przydzialu pamieci
         Zdarzenie[] nowaLista = new Zdarzenie[nowyRozmiar];
@@ -53,5 +53,17 @@ public class ListaZdarzen {
         arraycopy(listaZdarzen, 0, wynik, 0, rozmiar);
 
         return wynik;
+    }
+
+    public void zmien(int indeks, Zdarzenie noweZdarzenie){
+        if (indeks < 0 || indeks >= rozmiar){
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        listaZdarzen[indeks] = noweZdarzenie;
+    }
+    public void zamien(int indeks1, int indeks2){
+        Zdarzenie akumulator = daj(indeks1);
+        zmien(indeks1, daj(indeks2));
+        zmien(indeks2, akumulator);
     }
 }

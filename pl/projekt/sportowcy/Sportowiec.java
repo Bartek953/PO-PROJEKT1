@@ -1,8 +1,12 @@
 package pl.projekt.sportowcy;
 
+import pl.projekt.cechy.Czas;
 import pl.projekt.osrodek.Trasa;
 import pl.projekt.osrodek.Wezel;
+import pl.projekt.osrodek.Wyciag;
 import pl.projekt.zdarzenia.Zdarzenie;
+import pl.projekt.zdarzenia.sportowiec.ZdarzeniePoczatekTrasy;
+import pl.projekt.zdarzenia.sportowiec.ZdarzenieUstawienieWKolejce;
 
 import java.util.Random;
 
@@ -62,8 +66,13 @@ public class Sportowiec {
         return sledzony;
     }
 
-    public Zdarzenie decyzja(Wezel wezel){
-        return null;
+    public Zdarzenie decyzja(Wezel wezel, Czas czas){
+        if (wezel.trasy().pusta()){
+            return new ZdarzenieUstawienieWKolejce(czas, this, (Wyciag)wezel.wyciagi().daj(0));
+        }
+        else {
+            return new ZdarzeniePoczatekTrasy(czas, this, (Trasa)wezel.trasy().daj(0));
+        }
     }
 
 }

@@ -14,7 +14,7 @@ public class ZdarzeniePrzyjazdWyciagu extends ZdarzenieWyciagu{
 
     @Override
     public Zdarzenie[] wykonaj(){
-        ListaZdarzen lista = new ListaZdarzen();
+        ListaZdarzen lista = new ListaZdarzen(4, 2);
 
         // Zabieranie sportowcoc z kolejki.
         int ileNaKanapie = 0;

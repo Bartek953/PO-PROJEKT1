@@ -17,7 +17,7 @@ public class ZdarzenieDecyzyjne extends ZdarzenieSportowca {
 
     @Override
     public Zdarzenie[] wykonaj(){
-        Zdarzenie decyzja = sportowiec().decyzja(wezel);
+        Zdarzenie decyzja = sportowiec().decyzja(wezel, czas());
 
         return new Zdarzenie[]{ decyzja };
     }
