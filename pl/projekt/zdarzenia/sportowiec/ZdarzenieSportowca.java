@@ -10,7 +10,7 @@ public abstract class ZdarzenieSportowca extends Zdarzenie {
     private Sportowiec sportowiec;
 
     public ZdarzenieSportowca(Czas czas, Sportowiec sportowiec){
-        super(czas);
+        super(czas, 10);
         this.sportowiec = sportowiec;
     }
     public Sportowiec sportowiec(){

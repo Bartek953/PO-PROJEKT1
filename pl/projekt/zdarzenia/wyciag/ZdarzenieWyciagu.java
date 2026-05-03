@@ -8,7 +8,7 @@ public abstract class ZdarzenieWyciagu extends Zdarzenie {
     private Wyciag wyciag;
 
     public ZdarzenieWyciagu(Czas czas, Wyciag wyciag){
-        super(czas);
+        super(czas, 1);
         this.wyciag = wyciag;
     }
     public Wyciag wyciag(){

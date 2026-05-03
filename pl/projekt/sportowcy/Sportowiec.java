@@ -66,12 +66,58 @@ public class Sportowiec {
         return sledzony;
     }
 
-    public Zdarzenie decyzja(Wezel wezel, Czas czas){
-        if (wezel.trasy().pusta()){
-            return new ZdarzenieUstawienieWKolejce(czas, this, (Wyciag)wezel.wyciagi().daj(0));
+    public Zdarzenie losowaDecyzja(Wezel wezel, Czas czas){
+        int n = wezel.trasy().rozmiar() + wezel.wyciagi().rozmiar();
+        int wybor = generator.nextInt(0, n);
+
+        if (wybor < wezel.trasy().rozmiar()){
+            int indeks = wybor;
+            return new ZdarzeniePoczatekTrasy(czas, this, (Trasa)wezel.trasy().daj(indeks));
         }
         else {
-            return new ZdarzeniePoczatekTrasy(czas, this, (Trasa)wezel.trasy().daj(0));
+            int indeks = wybor - wezel.trasy().rozmiar();
+            return new ZdarzenieUstawienieWKolejce(czas, this, (Wyciag)wezel.wyciagi().daj(indeks));
+        }
+    }
+
+    public Trasa wybierzNajlepszaTrase(Wezel wezel){
+        Trasa najlepszaTrasa = null;
+
+        for (int i = 0; i < wezel.trasy().rozmiar(); i++){
+            Trasa aktTrasa = (Trasa) wezel.trasy().daj(i);
+
+            if (najlepszaTrasa == null || atrakcyjnoscTrasy(najlepszaTrasa) < atrakcyjnoscTrasy(aktTrasa)){
+                najlepszaTrasa = aktTrasa;
+            }
+        }
+        return najlepszaTrasa;
+    }
+
+    public Zdarzenie decyzja(Wezel wezel, Czas czas){
+        if (generator.nextDouble() <= wspSpontanicznosci){
+            return losowaDecyzja(wezel, czas);
+        }
+
+        Trasa najlepszaTrasa = wybierzNajlepszaTrase(wezel);
+        Wyciag najlepszyWyciag = null;
+
+        for (int i = 0; i < wezel.wyciagi().rozmiar(); i++){
+            Trasa aktTrasa = wybierzNajlepszaTrase(wezel.wyciagi().daj(i).koniec());
+            if (najlepszaTrasa == null || (aktTrasa != null && atrakcyjnoscTrasy(najlepszaTrasa) < atrakcyjnoscTrasy(aktTrasa))){
+                najlepszaTrasa = aktTrasa;
+                najlepszyWyciag = (Wyciag) wezel.wyciagi().daj(i);
+            }
+        }
+
+        if (najlepszaTrasa == null){
+            throw new RuntimeException("Grad nie jest silnie spójny!");
+        }
+
+        if (najlepszaTrasa.start() == wezel){
+            return new ZdarzeniePoczatekTrasy(czas, this, najlepszaTrasa);
+        }
+        else {
+            return new ZdarzenieUstawienieWKolejce(czas, this, najlepszyWyciag);
         }
     }
 
