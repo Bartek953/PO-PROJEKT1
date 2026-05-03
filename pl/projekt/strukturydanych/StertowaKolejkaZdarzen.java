@@ -3,6 +3,7 @@ package pl.projekt.strukturydanych;
 import pl.projekt.cechy.Czas;
 import pl.projekt.zdarzenia.Zdarzenie;
 
+// Zdarzenia na Kolejce muszą być unikalne
 public class StertowaKolejkaZdarzen implements KolejkaZdarzen{
     // Traktuje liste jako reprezentacje drzewa binarnego
     // Gdzie 1 jest korzeniem, a dziecmi ind jest (2*ind) oraz (2*ind + 1)
@@ -19,6 +20,9 @@ public class StertowaKolejkaZdarzen implements KolejkaZdarzen{
     @Override
     public boolean pusta() {
         return licznikZdarzen == 0;
+    }
+    public int rozmiar(){
+        return licznikZdarzen;
     }
 
     @Override
@@ -65,38 +69,30 @@ public class StertowaKolejkaZdarzen implements KolejkaZdarzen{
             Zdarzenie lewy = listaZdarzen.daj(lewyPozycja);
 
             Zdarzenie prawy = null;
-            if (prawyPozycja < listaZdarzen.rozmiar()){
+            if (prawyPozycja <= licznikZdarzen){
                 prawy = listaZdarzen.daj(prawyPozycja);
             }
 
+            int minPozycja = pozycja;
             if (lewy == null && prawy == null) {
                 break;
             }
             else if (lewy == null) {
-                if (Zdarzenie.wczesniejsze(prawy, listaZdarzen.daj(pozycja))) {
-                    listaZdarzen.zamien(pozycja, prawyPozycja);
-                    pozycja = prawyPozycja;
-                }
-                else {
-                    break;
-                }
+                minPozycja = prawyPozycja;
             }
             else if (prawy == null) {
-                if (Zdarzenie.wczesniejsze(lewy, listaZdarzen.daj(pozycja))) {
-                    listaZdarzen.zamien(pozycja, lewyPozycja);
-                    pozycja = lewyPozycja;
-                }
-                else {
-                    break;
-                }
+                minPozycja = lewyPozycja;
             }
-            else if (Zdarzenie.wczesniejsze(lewy, prawy) && Zdarzenie.wczesniejsze(lewy, listaZdarzen.daj(pozycja))) {
-                listaZdarzen.zamien(pozycja, lewyPozycja);
-                pozycja = lewyPozycja;
+            else if (Zdarzenie.wczesniejsze(lewy, prawy)) {
+                minPozycja = lewyPozycja;
             }
-            else if (Zdarzenie.wczesniejsze(prawy, lewy) && Zdarzenie.wczesniejsze(prawy, listaZdarzen.daj(pozycja))){
-                listaZdarzen.zamien(pozycja, prawyPozycja);
-                pozycja = prawyPozycja;
+            else {
+                minPozycja = prawyPozycja;
+            }
+
+            if (Zdarzenie.wczesniejsze(listaZdarzen.daj(minPozycja), listaZdarzen.daj(pozycja))){
+                listaZdarzen.zamien(minPozycja, pozycja);
+                pozycja = minPozycja;
             }
             else {
                 break;
