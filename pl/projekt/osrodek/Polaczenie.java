@@ -38,5 +38,6 @@ public abstract class Polaczenie {
     public void zwiekszLiczbePrzejazdow(){
         liczbaPrzejazdow++;
     }
+    public abstract String statystyki();
 
 }

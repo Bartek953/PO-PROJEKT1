@@ -11,7 +11,6 @@ import pl.projekt.zdarzenia.sportowiec.ZdarzenieUstawienieWKolejce;
 import java.util.Random;
 
 public class Sportowiec {
-    private static int AKTUALNY_NUMER;
     private static Random generator;
 
     private int numer;
@@ -20,19 +19,18 @@ public class Sportowiec {
     private Wagi wagi;
     private boolean sledzony;
 
-    public Sportowiec(int poziomZaawansowania, double wspSpontanicznosci, Wagi wagi, boolean sledzony){
+    public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, Wagi wagi, boolean sledzony){
         if (generator == null){
             generator = new Random();
         }
-        numer = AKTUALNY_NUMER;
-        AKTUALNY_NUMER++;
+        this.numer = numer;
         this.poziomZaawansowania = poziomZaawansowania;
         this.wspSpontanicznosci = wspSpontanicznosci;
         this.wagi = wagi;
         this.sledzony = sledzony;
     }
-    public Sportowiec(int poziomZaawansowania, double wspSpontanicznosci, double wagaTrudnosci, double wagaNawierzchni, boolean sledzony){
-        this(poziomZaawansowania, wspSpontanicznosci, new Wagi(wagaTrudnosci, wagaNawierzchni), sledzony);
+    public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wagaTrudnosci, double wagaNawierzchni, boolean sledzony){
+        this(numer, poziomZaawansowania, wspSpontanicznosci, new Wagi(wagaTrudnosci, wagaNawierzchni), sledzony);
     }
     public int numer(){
         return numer;

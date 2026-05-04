@@ -3,7 +3,6 @@ package pl.projekt.osrodek;
 import pl.projekt.strukturydanych.ListaPolaczen;
 
 public class Wezel {
-    private static int AKTUALNY_NUMER;
     private int numer;
     private int wysokosc;
     private Wspolrzedne wspolrzedne;
@@ -11,16 +10,16 @@ public class Wezel {
     private ListaPolaczen trasy;
     private ListaPolaczen wyciagi;
 
-    public Wezel(int wysokosc, Wspolrzedne wspolrzedne, boolean skomunikowany){
-        this.numer = AKTUALNY_NUMER++;
+    public Wezel(int numer, int wysokosc, Wspolrzedne wspolrzedne, boolean skomunikowany){
+        this.numer = numer;
         this.wysokosc = wysokosc;
         this.wspolrzedne = wspolrzedne;
         this.skomunikowany = skomunikowany;
         this.trasy = new ListaPolaczen();
         this.wyciagi = new ListaPolaczen();
     }
-    public Wezel(int wysokosc, int x, int y, boolean skomunikowany){
-        this(wysokosc, new Wspolrzedne(x, y), skomunikowany);
+    public Wezel(int numer, int wysokosc, int x, int y, boolean skomunikowany){
+        this(numer, wysokosc, new Wspolrzedne(x, y), skomunikowany);
     }
 
     public void dodajTrase(Trasa trasa){

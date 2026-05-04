@@ -22,6 +22,15 @@ public class Czas {
         }
         this.godzina = godzina;
     }
+    public Czas(String napis){
+        //format HH:MM:SS
+        String[] czesci = napis.split(":");
+        int[] czesciInt = new int[3];
+        for (int i = 0; i < 3; i++){
+            czesciInt[i] = Integer.parseInt(czesci[i]);
+        }
+        this(czesciInt[0], czesciInt[1], czesciInt[2]);
+    }
 
     public Czas(Czas czas){
         this(czas.godzina(), czas.minuta(), czas.sekunda());
