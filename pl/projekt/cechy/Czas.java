@@ -24,12 +24,9 @@ public class Czas {
     }
     public Czas(String napis){
         //format HH:MM:SS
-        String[] czesci = napis.split(":");
-        int[] czesciInt = new int[3];
-        for (int i = 0; i < 3; i++){
-            czesciInt[i] = Integer.parseInt(czesci[i]);
-        }
-        this(czesciInt[0], czesciInt[1], czesciInt[2]);
+        this(Integer.parseInt(napis.split(":")[0]),
+             Integer.parseInt(napis.split(":")[1]),
+             Integer.parseInt(napis.split(":")[2]));
     }
 
     public Czas(Czas czas){

@@ -18,8 +18,10 @@ public class Sportowiec {
     private double wspSpontanicznosci;
     private Wagi wagi;
     private boolean sledzony;
+    private Wezel wezelStartowy;
+    private Czas czasStartu;
 
-    public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, Wagi wagi, boolean sledzony){
+    public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, Wagi wagi, boolean sledzony, Wezel wezelStartowy, Czas czasStartu){
         if (generator == null){
             generator = new Random();
         }
@@ -28,15 +30,26 @@ public class Sportowiec {
         this.wspSpontanicznosci = wspSpontanicznosci;
         this.wagi = wagi;
         this.sledzony = sledzony;
+        this.wezelStartowy = wezelStartowy;
+        this.czasStartu = czasStartu;
+    }
+    public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wagaTrudnosci, double wagaNawierzchni, boolean sledzony, Wezel wezelStartowy, Czas czasStartu){
+        this(numer, poziomZaawansowania, wspSpontanicznosci, new Wagi(wagaTrudnosci, wagaNawierzchni), sledzony, wezelStartowy, czasStartu);
     }
     public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wagaTrudnosci, double wagaNawierzchni, boolean sledzony){
-        this(numer, poziomZaawansowania, wspSpontanicznosci, new Wagi(wagaTrudnosci, wagaNawierzchni), sledzony);
+        this(numer, poziomZaawansowania, wspSpontanicznosci, new Wagi(wagaTrudnosci, wagaNawierzchni), sledzony, null, null);
     }
     public int numer(){
         return numer;
     }
     public int poziomZaawansowania(){
         return poziomZaawansowania;
+    }
+    public Wezel wezelStartowy(){
+        return wezelStartowy;
+    }
+    public Czas czasStartu(){
+        return czasStartu;
     }
 
     // [0, 1]
