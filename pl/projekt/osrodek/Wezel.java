@@ -1,22 +1,23 @@
 package pl.projekt.osrodek;
 
-import pl.projekt.strukturydanych.ListaPolaczen;
+import pl.projekt.strukturydanych.ListaTras;
+import pl.projekt.strukturydanych.ListaWyciagow;
 
 public class Wezel {
     private int numer;
     private int wysokosc;
     private Wspolrzedne wspolrzedne;
     private boolean skomunikowany;
-    private ListaPolaczen trasy;
-    private ListaPolaczen wyciagi;
+    private ListaTras trasy;
+    private ListaWyciagow wyciagi;
 
     public Wezel(int numer, int wysokosc, Wspolrzedne wspolrzedne, boolean skomunikowany){
         this.numer = numer;
         this.wysokosc = wysokosc;
         this.wspolrzedne = wspolrzedne;
         this.skomunikowany = skomunikowany;
-        this.trasy = new ListaPolaczen();
-        this.wyciagi = new ListaPolaczen();
+        this.trasy = new ListaTras();
+        this.wyciagi = new ListaWyciagow();
     }
     public Wezel(int numer, int wysokosc, int x, int y, boolean skomunikowany){
         this(numer, wysokosc, new Wspolrzedne(x, y), skomunikowany);
@@ -34,10 +35,10 @@ public class Wezel {
     public int wysokosc(){
         return wysokosc;
     }
-    public ListaPolaczen trasy(){
+    public ListaTras trasy(){
         return trasy;
     }
-    public ListaPolaczen wyciagi(){
+    public ListaWyciagow wyciagi(){
         return wyciagi;
     }
 }

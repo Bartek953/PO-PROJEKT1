@@ -1,6 +1,5 @@
 package pl.projekt.cechy;
 
-import javax.management.RuntimeErrorException;
 
 public class Czas {
     private int godzina;

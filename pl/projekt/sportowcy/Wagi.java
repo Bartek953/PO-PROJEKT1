@@ -12,7 +12,7 @@ public class Wagi {
     public double dopasowanieTrudnosci(){
         return dopasowanieTrudnosci;
     }
-    public double getWyrownanieNawierzchni(){
+    public double wyrownanieNawierzchni(){
         return wyrownanieNawierzchni;
     }
 

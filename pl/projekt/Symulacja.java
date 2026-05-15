@@ -27,7 +27,7 @@ public class Symulacja {
         this.czasZamkniecia = new Czas(15, 0, 0);
     }
 
-    public void wczytaj(){
+    private void wczytaj(){
         SkanerSymulacji skaner = new SkanerSymulacji();
         Przetwarzacz przetwarzacz = new Przetwarzacz();
 
@@ -41,7 +41,7 @@ public class Symulacja {
         listaSportowcow = przetwarzacz.dajSportowcow();
     }
 
-    public void inicjalizujKolejke(){
+    private void inicjalizujKolejke(){
         for (Sportowiec sportowiec : listaSportowcow){
             kolejkaZdarzen.dodaj(new ZdarzenieDecyzyjne(
                     sportowiec.czasStartu(), sportowiec, sportowiec.wezelStartowy()));

@@ -82,12 +82,11 @@ public class Sportowiec {
         int wybor = generator.nextInt(0, n);
 
         if (wybor < wezel.trasy().rozmiar()){
-            int indeks = wybor;
-            return new ZdarzeniePoczatekTrasy(czas, this, (Trasa)wezel.trasy().daj(indeks));
+            return new ZdarzeniePoczatekTrasy(czas, this, wezel.trasy().daj(wybor));
         }
         else {
             int indeks = wybor - wezel.trasy().rozmiar();
-            return new ZdarzenieUstawienieWKolejce(czas, this, (Wyciag)wezel.wyciagi().daj(indeks));
+            return new ZdarzenieUstawienieWKolejce(czas, this, wezel.wyciagi().daj(indeks));
         }
     }
 
@@ -95,7 +94,7 @@ public class Sportowiec {
         Trasa najlepszaTrasa = null;
 
         for (int i = 0; i < wezel.trasy().rozmiar(); i++){
-            Trasa aktTrasa = (Trasa) wezel.trasy().daj(i);
+            Trasa aktTrasa = wezel.trasy().daj(i);
 
             if (najlepszaTrasa == null || atrakcyjnoscTrasy(najlepszaTrasa) < atrakcyjnoscTrasy(aktTrasa)){
                 najlepszaTrasa = aktTrasa;
@@ -113,15 +112,16 @@ public class Sportowiec {
         Wyciag najlepszyWyciag = null;
 
         for (int i = 0; i < wezel.wyciagi().rozmiar(); i++){
-            Trasa aktTrasa = wybierzNajlepszaTrase(wezel.wyciagi().daj(i).koniec());
+            Wyciag wyciag = wezel.wyciagi().daj(i);
+            Trasa aktTrasa = wybierzNajlepszaTrase(wyciag.koniec());
             if (najlepszaTrasa == null || (aktTrasa != null && atrakcyjnoscTrasy(najlepszaTrasa) < atrakcyjnoscTrasy(aktTrasa))){
                 najlepszaTrasa = aktTrasa;
-                najlepszyWyciag = (Wyciag) wezel.wyciagi().daj(i);
+                najlepszyWyciag = wyciag;
             }
         }
 
         if (najlepszaTrasa == null && wezel.wyciagi().rozmiar() != 0){
-            return new ZdarzenieUstawienieWKolejce(czas, this, (Wyciag) wezel.wyciagi().daj(0));
+            return new ZdarzenieUstawienieWKolejce(czas, this, wezel.wyciagi().daj(0));
         }
 
         if (najlepszaTrasa == null){
