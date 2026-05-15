@@ -107,8 +107,12 @@ public class Sportowiec {
             }
         }
 
+        if (najlepszaTrasa == null && wezel.wyciagi().rozmiar() != 0){
+            return new ZdarzenieUstawienieWKolejce(czas, this, (Wyciag) wezel.wyciagi().daj(0));
+        }
+
         if (najlepszaTrasa == null){
-            throw new RuntimeException("Grad nie jest silnie spójny!");
+            throw new RuntimeException("Graf nie jest silnie spójny!");
         }
 
         if (najlepszaTrasa.start() == wezel){

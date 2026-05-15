@@ -22,8 +22,6 @@ public class ZdarzenieKoniecTrasy extends ZdarzenieRaportowe{
     public Zdarzenie[] wykonaj(){
         // Raportowanie:
         super.wykonaj();
-
-        trasa.zwiekszLiczbePrzejazdow();
         Zdarzenie nastepne = new ZdarzenieDecyzyjne(czas(), sportowiec(), trasa.koniec());
         return new Zdarzenie[]{nastepne};
     }

@@ -3,6 +3,7 @@ package pl.projekt.zdarzenia.sportowiec;
 import pl.projekt.cechy.Czas;
 import pl.projekt.osrodek.Trasa;
 import pl.projekt.sportowcy.Sportowiec;
+import pl.projekt.zdarzenia.Priorytet;
 import pl.projekt.zdarzenia.Zdarzenie;
 
 public class ZdarzeniePoczatekTrasy extends ZdarzenieRaportowe{
@@ -22,6 +23,8 @@ public class ZdarzeniePoczatekTrasy extends ZdarzenieRaportowe{
     public Zdarzenie[] wykonaj(){
         // Raportowanie:
         super.wykonaj();
+
+        trasa.zwiekszLiczbePrzejazdow();
 
         Czas czasKonca = Czas.dodaj(czas(), trasa.czasPrzejazdu());
         Zdarzenie nastepne = new ZdarzenieKoniecTrasy(czasKonca, sportowiec(), trasa);

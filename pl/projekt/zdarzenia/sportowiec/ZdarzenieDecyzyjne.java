@@ -3,6 +3,7 @@ package pl.projekt.zdarzenia.sportowiec;
 import pl.projekt.cechy.Czas;
 import pl.projekt.osrodek.Wezel;
 import pl.projekt.sportowcy.Sportowiec;
+import pl.projekt.zdarzenia.Priorytet;
 import pl.projekt.zdarzenia.Zdarzenie;
 
 
@@ -13,6 +14,7 @@ public class ZdarzenieDecyzyjne extends ZdarzenieSportowca {
     public ZdarzenieDecyzyjne(Czas czas, Sportowiec sportowiec, Wezel wezel){
         super(czas, sportowiec);
         this.wezel = wezel;
+        this.priorytet = Priorytet.ZDARZENIE_NATYCHMIASTOWE;
     }
 
     @Override
