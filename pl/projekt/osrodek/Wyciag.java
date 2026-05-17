@@ -2,22 +2,16 @@ package pl.projekt.osrodek;
 
 import pl.projekt.cechy.Czas;
 import pl.projekt.sportowcy.Sportowiec;
+import pl.projekt.strukturydanych.KolejkaOczekujacych;
 import pl.projekt.strukturydanych.ListowaKolejkaOczekujacych;
 
 public class Wyciag extends Polaczenie{
     private Czas odstepCzasu;
     private int maksymalnaLiczbaOsob;
-    private ListowaKolejkaOczekujacych kolejkaOczekujacych;
-
-    private static Wezel dajStart(Wezel w1, Wezel w2){
-        return w1.wysokosc() < w2.wysokosc() ? w1 : w2;
-    }
-    private static Wezel dajKoniec(Wezel w1, Wezel w2){
-        return w1.wysokosc() > w2.wysokosc() ? w1 : w2;
-    }
+    private KolejkaOczekujacych kolejkaOczekujacych;
 
     public Wyciag(int numer, Wezel wezel1, Wezel wezel2, int czasPrzejazdu, int odstepCzasu, int maksymalnaLiczbaOsob){
-        super(numer, TypPolaczenia.WYCIAG, dajStart(wezel1, wezel2), dajKoniec(wezel1, wezel2), czasPrzejazdu);
+        super(numer, wezel1, wezel2, czasPrzejazdu);
 
         this.odstepCzasu = new Czas(0, 0, odstepCzasu);
         this.maksymalnaLiczbaOsob = maksymalnaLiczbaOsob;

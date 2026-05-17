@@ -4,14 +4,12 @@ import pl.projekt.cechy.Czas;
 
 public abstract class Polaczenie {
     private int numer;
-    private TypPolaczenia typPolaczenia;
     private Wezel start, koniec;
     private Czas czasPrzejazdu;
     private int liczbaPrzejazdow;
 
-    public Polaczenie(int numer, TypPolaczenia typPolaczenia, Wezel start, Wezel koniec, int czasPrzejazdu){
+    public Polaczenie(int numer, Wezel start, Wezel koniec, int czasPrzejazdu){
         this.numer = numer;
-        this.typPolaczenia = typPolaczenia;
         this.start = start;
         this.koniec = koniec;
         this.czasPrzejazdu = new Czas(0, 0, czasPrzejazdu);
@@ -19,9 +17,6 @@ public abstract class Polaczenie {
     }
     public int numer(){
         return numer;
-    }
-    public TypPolaczenia typPolaczenia(){
-        return typPolaczenia;
     }
     public Wezel start(){
         return start;

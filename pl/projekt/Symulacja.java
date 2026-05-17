@@ -4,6 +4,7 @@ import pl.projekt.cechy.Czas;
 import pl.projekt.osrodek.Trasa;
 import pl.projekt.osrodek.Wyciag;
 import pl.projekt.sportowcy.Sportowiec;
+import pl.projekt.strukturydanych.KolejkaZdarzen;
 import pl.projekt.strukturydanych.StertowaKolejkaZdarzen;
 import pl.projekt.wczytywanie.Przetwarzacz;
 import pl.projekt.wczytywanie.SkanerSymulacji;
@@ -14,7 +15,7 @@ import pl.projekt.zdarzenia.sportowiec.ZdarzenieKoniecWjazdu;
 import pl.projekt.zdarzenia.wyciag.ZdarzeniePrzyjazdWyciagu;
 
 public class Symulacja {
-    private StertowaKolejkaZdarzen kolejkaZdarzen;
+    private KolejkaZdarzen kolejkaZdarzen;
     private Wyciag[] listaWyciagow;
     private Trasa[] listaTras;
     private Sportowiec[] listaSportowcow;
@@ -25,6 +26,7 @@ public class Symulacja {
         this.kolejkaZdarzen = new StertowaKolejkaZdarzen();
         this.czasOtwarcia = new Czas(9, 0, 0);
         this.czasZamkniecia = new Czas(15, 0, 0);
+        Zdarzenie.resetujKolejnosc();
     }
 
     private void wczytaj(){

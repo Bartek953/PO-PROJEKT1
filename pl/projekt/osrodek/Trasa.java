@@ -5,14 +5,8 @@ public class Trasa extends Polaczenie {
     private double odpornosc; // (0, 1]
     private double bazowaAtrakcyjnosc; // [0, 1]
 
-    private static Wezel dajStart(Wezel w1, Wezel w2){
-        return w1.wysokosc() > w2.wysokosc() ? w1 : w2;
-    }
-    private static Wezel dajKoniec(Wezel w1, Wezel w2){
-        return w1.wysokosc() < w2.wysokosc() ? w1 : w2;
-    }
     public Trasa(int numer, Wezel wezel1, Wezel wezel2, int czasPrzejazdu, int poziomTrudnosci, double odpornosc, double bazowaAtrakcyjnosc){
-        super(numer, TypPolaczenia.TRASA, dajStart(wezel1, wezel2), dajKoniec(wezel1, wezel2), czasPrzejazdu);
+        super(numer, wezel1, wezel2, czasPrzejazdu);
 
         this.poziomTrudnosci = poziomTrudnosci;
         this.odpornosc = odpornosc;

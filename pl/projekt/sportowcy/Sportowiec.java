@@ -61,7 +61,7 @@ public class Sportowiec {
             return Math.max((double)0.2, (1.0 - (double)(poziomZaawansowania() - trasa.poziomTrudnosci()) / 7.0));
         }
         else {
-            return 1.0 - (double)(trasa.poziomTrudnosci() - poziomZaawansowania) / 5.0;
+            return 1.0 - (double)(trasa.poziomTrudnosci() - poziomZaawansowania()) / 5.0;
         }
     }
 
@@ -104,7 +104,7 @@ public class Sportowiec {
     }
 
     public Zdarzenie decyzja(Wezel wezel, Czas czas){
-        if (generator.nextDouble() <= wspSpontanicznosci){
+        if (generator.nextDouble() < wspSpontanicznosci){
             return losowaDecyzja(wezel, czas);
         }
 

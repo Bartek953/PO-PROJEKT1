@@ -41,4 +41,10 @@ public class Wezel {
     public ListaWyciagow wyciagi(){
         return wyciagi;
     }
+    public Wspolrzedne wspolrzedne(){
+        return wspolrzedne;
+    }
+    public boolean skomunikowany(){
+        return skomunikowany;
+    }
 }
