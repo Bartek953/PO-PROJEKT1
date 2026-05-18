@@ -17,7 +17,7 @@ public class ZdarzeniePrzyjazdWyciagu extends ZdarzenieWyciagu{
     public Zdarzenie[] wykonaj(){
         ListaZdarzen lista = new ListaZdarzen(4, 2);
 
-        // Zabieranie sportowcoc z kolejki.
+        // Zabieranie sportowców z kolejki.
         int ileNaKanapie = 0;
         while (!wyciag().kolejkaPusta() && ileNaKanapie < wyciag().maksymalnaLiczbaOsob()){
             Sportowiec sportowiec = wyciag().pierwszyWKolejce();

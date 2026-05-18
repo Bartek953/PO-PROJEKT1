@@ -11,7 +11,7 @@ public class ListowaKolejkaOczekujacych implements KolejkaOczekujacych{
     }
     @Override
     public void dodajNaKoniec(Sportowiec sportowiec) {
-        ElementKolejkiOczekujacych nowyKoniec = new ElementKolejkiOczekujacych(sportowiec, null);
+        ElementKolejkiOczekujacych nowyKoniec = new ElementKolejkiOczekujacych(sportowiec, koniec, null);
 
         if (pusta()){
             poczatek = nowyKoniec;
@@ -44,6 +44,7 @@ public class ListowaKolejkaOczekujacych implements KolejkaOczekujacych{
             ElementKolejkiOczekujacych nowyPoczatek = poczatek.nastepny();
             poczatek.usun();
             poczatek = nowyPoczatek;
+            poczatek.ustawPoprzedni(null);
         }
     }
 

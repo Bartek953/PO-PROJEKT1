@@ -10,8 +10,6 @@ import pl.projekt.wczytywanie.Przetwarzacz;
 import pl.projekt.wczytywanie.SkanerSymulacji;
 import pl.projekt.zdarzenia.Zdarzenie;
 import pl.projekt.zdarzenia.sportowiec.ZdarzenieDecyzyjne;
-import pl.projekt.zdarzenia.sportowiec.ZdarzenieKoniecTrasy;
-import pl.projekt.zdarzenia.sportowiec.ZdarzenieKoniecWjazdu;
 import pl.projekt.zdarzenia.wyciag.ZdarzeniePrzyjazdWyciagu;
 
 public class Symulacja {

@@ -36,7 +36,7 @@ public class Sportowiec {
     public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wagaTrudnosci, double wagaNawierzchni, boolean sledzony, Wezel wezelStartowy, Czas czasStartu){
         this(numer, poziomZaawansowania, wspSpontanicznosci, new Wagi(wagaTrudnosci, wagaNawierzchni), sledzony, wezelStartowy, czasStartu);
     }
-    // Konstrukor do testów klasy Sportowiec
+    // Konstruktor do testów klasy Sportowiec
     public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wagaTrudnosci, double wagaNawierzchni, boolean sledzony){
         this(numer, poziomZaawansowania, wspSpontanicznosci, new Wagi(wagaTrudnosci, wagaNawierzchni), sledzony, null, null);
     }
@@ -93,7 +93,7 @@ public class Sportowiec {
     }
 
     // Znajduje najlepszą trasę wychodzącą z danego węzła (tylko z niego - nie patrzy na wyciągi).
-    // Zwraca null jeśli węzęł nie ma tras.
+    // Zwraca null jeśli węzeł nie ma tras.
     public Trasa wybierzNajlepszaTrase(Wezel wezel){
         Trasa najlepszaTrasa = null;
 

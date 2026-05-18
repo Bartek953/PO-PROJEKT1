@@ -36,7 +36,7 @@ public class StertowaKolejkaZdarzen implements KolejkaZdarzen{
         int pozycja = licznikZdarzen + 1;
         licznikZdarzen++;
 
-        // Zachowanie niezmiennika - trzeba naprawić trasę od korzenia do miejsca wstawienia:
+        // Zachowanie niezmiennika - trzeba naprawić ścieżkę od miejsca wstawienia do korzenia:
         while (pozycja > 1 && Zdarzenie.wczesniejsze(listaZdarzen.daj(pozycja), listaZdarzen.daj(pozycja / 2))){
             listaZdarzen.zamien(pozycja, pozycja / 2);
             pozycja /= 2;
@@ -65,7 +65,7 @@ public class StertowaKolejkaZdarzen implements KolejkaZdarzen{
         // Zachowanie niezmiennika:
         int pozycja = 1;
         while (2 * pozycja <= licznikZdarzen) {
-            // Wybieramy czy lewy czy prawy sen staje się nowym "lokalnym korzeniem":
+            // Wybieramy czy lewy czy prawy syn staje się nowym "lokalnym korzeniem":
             int lewyPozycja = 2 * pozycja;
             int prawyPozycja = 2 * pozycja + 1;
             Zdarzenie lewy = listaZdarzen.daj(lewyPozycja);

@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 
-// Celem skanera jest wczytanie wejścia i załadowanie go doobiektów DTO.
+// Celem skanera jest wczytanie wejścia i załadowanie go do obiektów DTO.
 // Skaner nie przetwarza danych - tym zajmie się przetwarzacz.
 public class SkanerSymulacji {
     private final Scanner skanerWejscia;
