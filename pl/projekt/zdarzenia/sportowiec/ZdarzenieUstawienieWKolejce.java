@@ -10,9 +10,8 @@ import pl.projekt.zdarzenia.Zdarzenie;
 public class ZdarzenieUstawienieWKolejce extends ZdarzenieRaportowe {
     private Wyciag wyciag;
     public ZdarzenieUstawienieWKolejce(Czas czas, Sportowiec sportowiec, Wyciag wyciag){
-        super(czas, sportowiec);
+        super(czas, sportowiec, Priorytet.ZDARZENIE_NATYCHMIASTOWE);
         this.wyciag = wyciag;
-        this.priorytet = Priorytet.ZDARZENIE_NATYCHMIASTOWE;
     }
 
     @Override

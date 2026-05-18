@@ -10,8 +10,8 @@ import pl.projekt.zdarzenia.Zdarzenie;
 public abstract class ZdarzenieSportowca extends Zdarzenie {
     private Sportowiec sportowiec;
 
-    public ZdarzenieSportowca(Czas czas, Sportowiec sportowiec){
-        super(czas, Priorytet.ZDARZENIE_NORMALNE);
+    public ZdarzenieSportowca(Czas czas, Sportowiec sportowiec, Priorytet priorytet){
+        super(czas, priorytet);
         this.sportowiec = sportowiec;
     }
     public Sportowiec sportowiec(){

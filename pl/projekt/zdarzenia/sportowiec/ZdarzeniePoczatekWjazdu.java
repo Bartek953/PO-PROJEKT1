@@ -4,13 +4,14 @@ import pl.projekt.cechy.Czas;
 import pl.projekt.osrodek.Trasa;
 import pl.projekt.osrodek.Wyciag;
 import pl.projekt.sportowcy.Sportowiec;
+import pl.projekt.zdarzenia.Priorytet;
 import pl.projekt.zdarzenia.Zdarzenie;
 
 public class ZdarzeniePoczatekWjazdu extends ZdarzenieRaportowe{
     private Wyciag wyciag;
 
     public ZdarzeniePoczatekWjazdu(Czas czas, Sportowiec sportowiec, Wyciag wyciag){
-        super(czas, sportowiec);
+        super(czas, sportowiec, Priorytet.ZDARZENIE_NORMALNE);
         this.wyciag = wyciag;
     }
 

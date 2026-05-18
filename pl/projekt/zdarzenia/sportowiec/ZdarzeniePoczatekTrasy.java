@@ -10,8 +10,11 @@ public class ZdarzeniePoczatekTrasy extends ZdarzenieRaportowe{
     private Trasa trasa;
 
     public ZdarzeniePoczatekTrasy(Czas czas, Sportowiec sportowiec, Trasa trasa){
-        super(czas, sportowiec);
+        super(czas, sportowiec, Priorytet.ZDARZENIE_NORMALNE);
         this.trasa = trasa;
+    }
+    public Trasa trasa(){
+        return trasa;
     }
 
     @Override
@@ -23,8 +26,6 @@ public class ZdarzeniePoczatekTrasy extends ZdarzenieRaportowe{
     public Zdarzenie[] wykonaj(){
         // Raportowanie:
         super.wykonaj();
-
-        trasa.zwiekszLiczbePrzejazdow();
 
         Czas czasKonca = Czas.dodaj(czas(), trasa.czasPrzejazdu());
         Zdarzenie nastepne = new ZdarzenieKoniecTrasy(czasKonca, sportowiec(), trasa);

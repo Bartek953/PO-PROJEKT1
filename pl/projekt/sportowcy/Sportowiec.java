@@ -36,6 +36,7 @@ public class Sportowiec {
     public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wagaTrudnosci, double wagaNawierzchni, boolean sledzony, Wezel wezelStartowy, Czas czasStartu){
         this(numer, poziomZaawansowania, wspSpontanicznosci, new Wagi(wagaTrudnosci, wagaNawierzchni), sledzony, wezelStartowy, czasStartu);
     }
+    // Konstrukor do testów klasy Sportowiec
     public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wagaTrudnosci, double wagaNawierzchni, boolean sledzony){
         this(numer, poziomZaawansowania, wspSpontanicznosci, new Wagi(wagaTrudnosci, wagaNawierzchni), sledzony, null, null);
     }
@@ -52,7 +53,7 @@ public class Sportowiec {
         return czasStartu;
     }
 
-    // [0, 1]
+    // Zwraca liczbę z [0, 1]
     private double dopasowanieTrudnosci(Trasa trasa){
         if (trasa.poziomTrudnosci() >= poziomZaawansowania() + 5){
             return 0;
@@ -65,7 +66,7 @@ public class Sportowiec {
         }
     }
 
-    // [0, 1]
+    // Zwraca liczbę z [0, 1]
     public double atrakcyjnoscTrasy(Trasa trasa){
         double atrakcyjnoscTrudnosci = dopasowanieTrudnosci(trasa);
         double atrakcyjnoscNawierzchni = trasa.atrakcyjnoscNawierzchni();
@@ -82,6 +83,7 @@ public class Sportowiec {
         int wybor = generator.nextInt(0, n);
 
         if (wybor < wezel.trasy().rozmiar()){
+            wezel.trasy().daj(wybor).zwiekszLiczbePrzejazdow();
             return new ZdarzeniePoczatekTrasy(czas, this, wezel.trasy().daj(wybor));
         }
         else {
@@ -90,6 +92,8 @@ public class Sportowiec {
         }
     }
 
+    // Znajduje najlepszą trasę wychodzącą z danego węzła (tylko z niego - nie patrzy na wyciągi).
+    // Zwraca null jeśli węzęł nie ma tras.
     public Trasa wybierzNajlepszaTrase(Wezel wezel){
         Trasa najlepszaTrasa = null;
 
@@ -103,7 +107,9 @@ public class Sportowiec {
         return najlepszaTrasa;
     }
 
+    // Podejmuje decyzję o akcji sportowca (wybór wyciągu lub trasy).
     public Zdarzenie decyzja(Wezel wezel, Czas czas){
+        // Spontaniczny wybór sportowca:
         if (generator.nextDouble() < wspSpontanicznosci){
             return losowaDecyzja(wezel, czas);
         }
@@ -129,6 +135,7 @@ public class Sportowiec {
         }
 
         if (najlepszaTrasa.start() == wezel){
+            najlepszaTrasa.zwiekszLiczbePrzejazdow();
             return new ZdarzeniePoczatekTrasy(czas, this, najlepszaTrasa);
         }
         else {

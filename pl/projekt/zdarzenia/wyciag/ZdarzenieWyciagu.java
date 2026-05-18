@@ -8,8 +8,8 @@ import pl.projekt.zdarzenia.Zdarzenie;
 public abstract class ZdarzenieWyciagu extends Zdarzenie {
     private Wyciag wyciag;
 
-    public ZdarzenieWyciagu(Czas czas, Wyciag wyciag){
-        super(czas, Priorytet.ZDARZENIE_NORMALNE);
+    public ZdarzenieWyciagu(Czas czas, Wyciag wyciag, Priorytet priorytet){
+        super(czas, priorytet);
         this.wyciag = wyciag;
     }
     public Wyciag wyciag(){

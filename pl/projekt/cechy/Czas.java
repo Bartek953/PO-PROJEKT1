@@ -21,6 +21,7 @@ public class Czas {
         }
         this.godzina = godzina;
     }
+    // Konstruktor od formatu hh:mm:ss
     public Czas(String napis){
         //format HH:MM:SS
         this(Integer.parseInt(napis.split(":")[0]),
@@ -47,6 +48,8 @@ public class Czas {
         return sekunda() + 60 * (minuta() + 60 * godzina());
     }
 
+
+    // Wypisuje czas w formacie hh:mm:ss
     @Override
     public String toString(){
         StringBuilder wynik = new StringBuilder("");

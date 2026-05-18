@@ -43,6 +43,12 @@ public class Symulacja {
         listaSportowcow = przetwarzacz.dajSportowcow();
     }
 
+    // Przygotowuje kolejkę zdarzeń.
+    // W aktualnej implementacji wymaga to zainicjalizowania
+    // pojawienia się sportowców na stoku
+    // (Zdarzenie decyzyjne w węźle i czasie podanym na wejściu)
+    // oraz zainicjalizowania działania wyciągów
+    // (Trzeba ustawić pierwszą turę przyjazdów).
     private void inicjalizujKolejke(){
         for (Sportowiec sportowiec : listaSportowcow){
             kolejkaZdarzen.dodaj(new ZdarzenieDecyzyjne(
@@ -64,9 +70,11 @@ public class Symulacja {
             Zdarzenie[] listaKolejnych = zdarzenie.wykonaj();
 
             for (Zdarzenie kolejne : listaKolejnych){
+                // Zdarzenie jest dodawane, jeśli wykona się przed 15:00,
+                // nie dotyczy to jednak niektórych zdarzeń, które są
+                // końcem jakiejś czynności (np koniec trasy, koniec wjazdu).
                 if (kolejne != null && (Czas.mniejszy(kolejne.czas(), czasZamkniecia)
-                        || kolejne instanceof ZdarzenieKoniecTrasy
-                        || kolejne instanceof ZdarzenieKoniecWjazdu)){
+                        || kolejne.wykonajPoZamknieciu())){
                     kolejkaZdarzen.dodaj(kolejne);
                 }
             }

@@ -12,9 +12,8 @@ public class ZdarzenieDecyzyjne extends ZdarzenieSportowca {
     private Wezel wezel;
 
     public ZdarzenieDecyzyjne(Czas czas, Sportowiec sportowiec, Wezel wezel){
-        super(czas, sportowiec);
+        super(czas, sportowiec, Priorytet.ZDARZENIE_NATYCHMIASTOWE);
         this.wezel = wezel;
-        this.priorytet = Priorytet.ZDARZENIE_NATYCHMIASTOWE;
     }
 
     @Override

@@ -1,5 +1,9 @@
 package pl.projekt.transferdanych;
 
+
+// Klasy DTO (transferu danych) służą jako zwykłe "pojemniki na dane".
+// Ich celem jest przetrzymanie danych pomiędzy fazą ich wczytywania,
+// a ich przetwarzania.
 public class WezelDTO {
     private final int numer;
     private final int wysokosc;

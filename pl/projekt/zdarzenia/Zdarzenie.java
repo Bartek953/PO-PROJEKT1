@@ -5,7 +5,7 @@ import pl.projekt.sportowcy.Sportowiec;
 
 public abstract class Zdarzenie {
     private static long aktualnaKolejnosc;
-    protected Priorytet priorytet;
+    private final Priorytet priorytet;
 
     private Czas czas;
     private long kolejnosc;
@@ -24,6 +24,10 @@ public abstract class Zdarzenie {
     }
     public int priorytet(){
         return priorytet.priorytet();
+    }
+
+    public boolean wykonajPoZamknieciu(){
+        return false;
     }
 
     public Czas czas(){

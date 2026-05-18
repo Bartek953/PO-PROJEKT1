@@ -10,6 +10,9 @@ import pl.projekt.transferdanych.TrasaDTO;
 import pl.projekt.transferdanych.WezelDTO;
 import pl.projekt.transferdanych.WyciagDTO;
 
+
+// Celem przetwarzacza jest utworzenie obiektów, na podstawie danych
+// wprowadzonych przez obiekty DTO.
 public class Przetwarzacz {
     private Wezel[] wezly;
     private Wyciag[] wyciagi;

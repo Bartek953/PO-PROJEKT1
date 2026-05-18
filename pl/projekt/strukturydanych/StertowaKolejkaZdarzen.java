@@ -1,9 +1,8 @@
 package pl.projekt.strukturydanych;
 
-import pl.projekt.cechy.Czas;
 import pl.projekt.zdarzenia.Zdarzenie;
 
-// Zdarzenia na Kolejce muszą być unikalne
+// Implementacja sterty (heap).
 public class StertowaKolejkaZdarzen implements KolejkaZdarzen{
     // Traktuje liste jako reprezentacje drzewa binarnego
     // Gdzie 1 jest korzeniem, a dziecmi ind jest (2*ind) oraz (2*ind + 1)
@@ -37,6 +36,7 @@ public class StertowaKolejkaZdarzen implements KolejkaZdarzen{
         int pozycja = licznikZdarzen + 1;
         licznikZdarzen++;
 
+        // Zachowanie niezmiennika - trzeba naprawić trasę od korzenia do miejsca wstawienia:
         while (pozycja > 1 && Zdarzenie.wczesniejsze(listaZdarzen.daj(pozycja), listaZdarzen.daj(pozycja / 2))){
             listaZdarzen.zamien(pozycja, pozycja / 2);
             pozycja /= 2;
@@ -62,8 +62,10 @@ public class StertowaKolejkaZdarzen implements KolejkaZdarzen{
 
         licznikZdarzen--;
 
+        // Zachowanie niezmiennika:
         int pozycja = 1;
         while (2 * pozycja <= licznikZdarzen) {
+            // Wybieramy czy lewy czy prawy sen staje się nowym "lokalnym korzeniem":
             int lewyPozycja = 2 * pozycja;
             int prawyPozycja = 2 * pozycja + 1;
             Zdarzenie lewy = listaZdarzen.daj(lewyPozycja);
