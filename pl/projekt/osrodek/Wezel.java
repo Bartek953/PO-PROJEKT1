@@ -1,33 +1,33 @@
 package pl.projekt.osrodek;
 
-import pl.projekt.strukturydanych.ListaTras;
-import pl.projekt.strukturydanych.ListaWyciagow;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Wezel {
     private int numer;
     private int wysokosc;
     private Wspolrzedne wspolrzedne;
     private boolean skomunikowany;
-    private ListaTras trasy;
-    private ListaWyciagow wyciagi;
+    private List<Trasa> trasy;
+    private List<Wyciag> wyciagi;
 
     public Wezel(int numer, int wysokosc, Wspolrzedne wspolrzedne, boolean skomunikowany){
         this.numer = numer;
         this.wysokosc = wysokosc;
         this.wspolrzedne = wspolrzedne;
         this.skomunikowany = skomunikowany;
-        this.trasy = new ListaTras();
-        this.wyciagi = new ListaWyciagow();
+        this.trasy = new ArrayList<>();
+        this.wyciagi = new ArrayList<>();
     }
     public Wezel(int numer, int wysokosc, int x, int y, boolean skomunikowany){
         this(numer, wysokosc, new Wspolrzedne(x, y), skomunikowany);
     }
 
     public void dodajTrase(Trasa trasa){
-        trasy.dodaj(trasa);
+        trasy.add(trasa);
     }
     public void dodajWyciag(Wyciag wyciag){
-        wyciagi.dodaj(wyciag);
+        wyciagi.add(wyciag);
     }
     public int numer(){
         return numer;
@@ -35,10 +35,10 @@ public class Wezel {
     public int wysokosc(){
         return wysokosc;
     }
-    public ListaTras trasy(){
+    public List<Trasa> trasy(){
         return trasy;
     }
-    public ListaWyciagow wyciagi(){
+    public List<Wyciag> wyciagi(){
         return wyciagi;
     }
     public Wspolrzedne wspolrzedne(){

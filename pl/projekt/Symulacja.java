@@ -4,16 +4,19 @@ import pl.projekt.cechy.Czas;
 import pl.projekt.osrodek.Trasa;
 import pl.projekt.osrodek.Wyciag;
 import pl.projekt.sportowcy.Sportowiec;
-import pl.projekt.strukturydanych.KolejkaZdarzen;
-import pl.projekt.strukturydanych.StertowaKolejkaZdarzen;
 import pl.projekt.wczytywanie.Przetwarzacz;
 import pl.projekt.wczytywanie.SkanerSymulacji;
 import pl.projekt.zdarzenia.Zdarzenie;
 import pl.projekt.zdarzenia.sportowiec.ZdarzenieDecyzyjne;
 import pl.projekt.zdarzenia.wyciag.ZdarzeniePrzyjazdWyciagu;
 
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+
 public class Symulacja {
-    private KolejkaZdarzen kolejkaZdarzen;
+    private Queue<Zdarzenie> kolejkaZdarzen;
     private Wyciag[] listaWyciagow;
     private Trasa[] listaTras;
     private Sportowiec[] listaSportowcow;
@@ -21,7 +24,7 @@ public class Symulacja {
     private final Czas czasZamkniecia;
 
     public Symulacja(){
-        this.kolejkaZdarzen = new StertowaKolejkaZdarzen();
+        this.kolejkaZdarzen = new PriorityQueue<>();
         this.czasOtwarcia = new Czas(9, 0, 0);
         this.czasZamkniecia = new Czas(15, 0, 0);
         Zdarzenie.resetujKolejnosc();
@@ -49,11 +52,11 @@ public class Symulacja {
     // (Trzeba ustawić pierwszą turę przyjazdów).
     private void inicjalizujKolejke(){
         for (Sportowiec sportowiec : listaSportowcow){
-            kolejkaZdarzen.dodaj(new ZdarzenieDecyzyjne(
+            kolejkaZdarzen.offer(new ZdarzenieDecyzyjne(
                     sportowiec.czasStartu(), sportowiec, sportowiec.wezelStartowy()));
         }
         for (Wyciag wyciag : listaWyciagow){
-            kolejkaZdarzen.dodaj(new ZdarzeniePrzyjazdWyciagu(czasOtwarcia, wyciag));
+            kolejkaZdarzen.offer(new ZdarzeniePrzyjazdWyciagu(czasOtwarcia, wyciag));
         }
     }
 
@@ -61,11 +64,15 @@ public class Symulacja {
         wczytaj();
         inicjalizujKolejke();
 
-        while (!kolejkaZdarzen.pusta()){
-            Zdarzenie zdarzenie = kolejkaZdarzen.dajNajmniejszy();
-            kolejkaZdarzen.usunNajmniejszy();
+        while (!kolejkaZdarzen.isEmpty()){
+            Zdarzenie zdarzenie = kolejkaZdarzen.poll();
+            // Weź najmniejszy i usuń go z kolejki.
 
-            Zdarzenie[] listaKolejnych = zdarzenie.wykonaj();
+            List<Zdarzenie> listaKolejnych = zdarzenie.wykonaj();
+
+            if (listaKolejnych == null){
+                continue;
+            }
 
             for (Zdarzenie kolejne : listaKolejnych){
                 // Zdarzenie jest dodawane, jeśli wykona się przed 15:00,
@@ -73,7 +80,7 @@ public class Symulacja {
                 // końcem jakiejś czynności (np koniec trasy, koniec wjazdu).
                 if (kolejne != null && (Czas.mniejszy(kolejne.czas(), czasZamkniecia)
                         || kolejne.wykonajPoZamknieciu())){
-                    kolejkaZdarzen.dodaj(kolejne);
+                    kolejkaZdarzen.offer(kolejne);
                 }
             }
         }

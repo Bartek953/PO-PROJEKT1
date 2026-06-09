@@ -2,8 +2,9 @@ package pl.projekt.zdarzenia;
 
 import pl.projekt.cechy.Czas;
 import pl.projekt.sportowcy.Sportowiec;
+import java.util.List;
 
-public abstract class Zdarzenie {
+public abstract class Zdarzenie implements Comparable<Zdarzenie> {
     private static long aktualnaKolejnosc;
     private final Priorytet priorytet;
 
@@ -34,23 +35,29 @@ public abstract class Zdarzenie {
         return czas;
     }
 
-    public abstract Zdarzenie[] wykonaj();
+    public abstract List<Zdarzenie> wykonaj();
 
-    public static boolean wczesniejsze(Zdarzenie zdarzenie1, Zdarzenie zdarzenie2){
-        if (zdarzenie1 == null || zdarzenie2 == null){
-            throw new RuntimeException();
+    @Override
+    public int compareTo(Zdarzenie inneZdarzenie){
+        if (inneZdarzenie == null){
+            throw new NullPointerException("Zdarzenie nie może być null");
         }
-        else if (Czas.mniejszy(zdarzenie1.czas(), zdarzenie2.czas())){
-            return true;
+
+        if (Czas.mniejszy(this.czas(), inneZdarzenie.czas())){
+            return -1;
         }
-        else if (Czas.mniejszy(zdarzenie2.czas(), zdarzenie1.czas())){
-            return false;
+        else if (Czas.mniejszy(inneZdarzenie.czas(), this.czas())){
+            return 1;
         }
-        else if (zdarzenie1.priorytet() != zdarzenie2.priorytet()){
-            return zdarzenie1.priorytet() > zdarzenie2.priorytet();
+
+        if (this.priorytet() != inneZdarzenie.priorytet()){
+            return this.priorytet() > inneZdarzenie.priorytet() ? -1 : 1;
         }
-        else {
-            return zdarzenie1.kolejnosc() < zdarzenie2.kolejnosc();
+
+        if (this.kolejnosc() != inneZdarzenie.kolejnosc()){
+            return this.kolejnosc() < inneZdarzenie.kolejnosc() ? -1 : 1;
         }
+
+        return 0;
     }
 }

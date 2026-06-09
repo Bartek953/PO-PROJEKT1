@@ -2,35 +2,36 @@ package pl.projekt.osrodek;
 
 import pl.projekt.cechy.Czas;
 import pl.projekt.sportowcy.Sportowiec;
-import pl.projekt.strukturydanych.KolejkaOczekujacych;
-import pl.projekt.strukturydanych.ListowaKolejkaOczekujacych;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Wyciag extends Polaczenie{
     private Czas odstepCzasu;
     private int maksymalnaLiczbaOsob;
-    private KolejkaOczekujacych kolejkaOczekujacych;
+    private Queue<Sportowiec> kolejkaOczekujacych;
 
     public Wyciag(int numer, Wezel wezel1, Wezel wezel2, int czasPrzejazdu, int odstepCzasu, int maksymalnaLiczbaOsob){
         super(numer, wezel1, wezel2, czasPrzejazdu);
 
         this.odstepCzasu = new Czas(0, 0, odstepCzasu);
         this.maksymalnaLiczbaOsob = maksymalnaLiczbaOsob;
-        kolejkaOczekujacych = new ListowaKolejkaOczekujacych();
+        kolejkaOczekujacych = new LinkedList<>();
 
         start().dodajWyciag(this);
     }
 
     public void dodajDoKolejki(Sportowiec sportowiec){
-        kolejkaOczekujacych.dodajNaKoniec(sportowiec);
+        kolejkaOczekujacych.offer(sportowiec);
     }
     public Sportowiec pierwszyWKolejce(){
-        return kolejkaOczekujacych.pierwszy();
+        return kolejkaOczekujacych.peek();
     }
     public void usunPierwszegoZKolejki(){
-        kolejkaOczekujacych.usunPierwszy();
+        kolejkaOczekujacych.poll();
     }
     public boolean kolejkaPusta(){
-        return kolejkaOczekujacych.pusta();
+        return kolejkaOczekujacych.isEmpty();
     }
     public int maksymalnaLiczbaOsob(){
         return maksymalnaLiczbaOsob;

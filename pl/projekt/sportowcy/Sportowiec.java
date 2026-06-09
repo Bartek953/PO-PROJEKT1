@@ -79,16 +79,18 @@ public class Sportowiec {
     }
 
     public Zdarzenie losowaDecyzja(Wezel wezel, Czas czas){
-        int n = wezel.trasy().rozmiar() + wezel.wyciagi().rozmiar();
+        int n = wezel.trasy().size() + wezel.wyciagi().size();
         int wybor = generator.nextInt(0, n);
 
-        if (wybor < wezel.trasy().rozmiar()){
-            wezel.trasy().daj(wybor).zwiekszLiczbePrzejazdow();
-            return new ZdarzeniePoczatekTrasy(czas, this, wezel.trasy().daj(wybor));
+        if (wybor < wezel.trasy().size()){
+            Trasa wybranaTrasa = wezel.trasy().get(wybor);
+            wybranaTrasa.zwiekszLiczbePrzejazdow();
+            return new ZdarzeniePoczatekTrasy(czas, this, wybranaTrasa);
         }
         else {
-            int indeks = wybor - wezel.trasy().rozmiar();
-            return new ZdarzenieUstawienieWKolejce(czas, this, wezel.wyciagi().daj(indeks));
+            int indeks = wybor - wezel.trasy().size();
+            Wyciag wybranyWyciag = wezel.wyciagi().get(indeks);
+            return new ZdarzenieUstawienieWKolejce(czas, this, wybranyWyciag);
         }
     }
 
@@ -97,8 +99,8 @@ public class Sportowiec {
     public Trasa wybierzNajlepszaTrase(Wezel wezel){
         Trasa najlepszaTrasa = null;
 
-        for (int i = 0; i < wezel.trasy().rozmiar(); i++){
-            Trasa aktTrasa = wezel.trasy().daj(i);
+        for (int i = 0; i < wezel.trasy().size(); i++){
+            Trasa aktTrasa = wezel.trasy().get(i);
 
             if (najlepszaTrasa == null || atrakcyjnoscTrasy(najlepszaTrasa) < atrakcyjnoscTrasy(aktTrasa)){
                 najlepszaTrasa = aktTrasa;
@@ -117,8 +119,8 @@ public class Sportowiec {
         Trasa najlepszaTrasa = wybierzNajlepszaTrase(wezel);
         Wyciag najlepszyWyciag = null;
 
-        for (int i = 0; i < wezel.wyciagi().rozmiar(); i++){
-            Wyciag wyciag = wezel.wyciagi().daj(i);
+        for (int i = 0; i < wezel.wyciagi().size(); i++){
+            Wyciag wyciag = wezel.wyciagi().get(i);
             Trasa aktTrasa = wybierzNajlepszaTrase(wyciag.koniec());
             if (najlepszaTrasa == null || (aktTrasa != null && atrakcyjnoscTrasy(najlepszaTrasa) < atrakcyjnoscTrasy(aktTrasa))){
                 najlepszaTrasa = aktTrasa;
@@ -126,8 +128,8 @@ public class Sportowiec {
             }
         }
 
-        if (najlepszaTrasa == null && wezel.wyciagi().rozmiar() != 0){
-            return new ZdarzenieUstawienieWKolejce(czas, this, wezel.wyciagi().daj(0));
+        if (najlepszaTrasa == null && wezel.wyciagi().size() != 0){
+            return new ZdarzenieUstawienieWKolejce(czas, this, wezel.wyciagi().get(0));
         }
 
         if (najlepszaTrasa == null){

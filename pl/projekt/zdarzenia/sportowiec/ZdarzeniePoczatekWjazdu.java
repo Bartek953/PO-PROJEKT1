@@ -7,6 +7,9 @@ import pl.projekt.sportowcy.Sportowiec;
 import pl.projekt.zdarzenia.Priorytet;
 import pl.projekt.zdarzenia.Zdarzenie;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ZdarzeniePoczatekWjazdu extends ZdarzenieRaportowe{
     private Wyciag wyciag;
 
@@ -21,13 +24,14 @@ public class ZdarzeniePoczatekWjazdu extends ZdarzenieRaportowe{
     }
 
     @Override
-    public Zdarzenie[] wykonaj(){
+    public List<Zdarzenie> wykonaj(){
         // Raportowanie:
         super.wykonaj();
 
         Czas czasKonca = Czas.dodaj(czas(), wyciag.czasPrzejazdu());
         Zdarzenie nastepne = new ZdarzenieKoniecWjazdu(czasKonca, sportowiec(), wyciag);
-
-        return new Zdarzenie[]{nastepne};
+        List<Zdarzenie> lista = new ArrayList<>();
+        lista.add(nastepne);
+        return lista;
     }
 }

@@ -7,6 +7,8 @@ import pl.projekt.sportowcy.Sportowiec;
 import pl.projekt.zdarzenia.Priorytet;
 import pl.projekt.zdarzenia.Zdarzenie;
 
+import java.util.List;
+
 public class ZdarzenieUstawienieWKolejce extends ZdarzenieRaportowe {
     private Wyciag wyciag;
     public ZdarzenieUstawienieWKolejce(Czas czas, Sportowiec sportowiec, Wyciag wyciag){
@@ -20,12 +22,12 @@ public class ZdarzenieUstawienieWKolejce extends ZdarzenieRaportowe {
     }
 
     @Override
-    public Zdarzenie[] wykonaj(){
+    public List<Zdarzenie> wykonaj(){
         // Raportowanie:
         super.wykonaj();
 
         wyciag.dodajDoKolejki(sportowiec());
 
-        return new Zdarzenie[0];
+        return null;
     }
 }

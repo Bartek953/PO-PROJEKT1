@@ -3,10 +3,12 @@ package pl.projekt.zdarzenia.wyciag;
 import pl.projekt.cechy.Czas;
 import pl.projekt.osrodek.Wyciag;
 import pl.projekt.sportowcy.Sportowiec;
-import pl.projekt.strukturydanych.ListaZdarzen;
 import pl.projekt.zdarzenia.Priorytet;
 import pl.projekt.zdarzenia.Zdarzenie;
 import pl.projekt.zdarzenia.sportowiec.ZdarzeniePoczatekWjazdu;
+
+import java.util.List;
+import java.util.ArrayList;
 
 public class ZdarzeniePrzyjazdWyciagu extends ZdarzenieWyciagu{
     public ZdarzeniePrzyjazdWyciagu(Czas czas, Wyciag wyciag){
@@ -14,8 +16,8 @@ public class ZdarzeniePrzyjazdWyciagu extends ZdarzenieWyciagu{
     }
 
     @Override
-    public Zdarzenie[] wykonaj(){
-        ListaZdarzen lista = new ListaZdarzen(4, 2);
+    public List<Zdarzenie> wykonaj(){
+        List<Zdarzenie> lista = new ArrayList<>();
 
         // Zabieranie sportowców z kolejki.
         int ileNaKanapie = 0;
@@ -25,11 +27,11 @@ public class ZdarzeniePrzyjazdWyciagu extends ZdarzenieWyciagu{
             ileNaKanapie++;
 
             Zdarzenie zdarzenie = new ZdarzeniePoczatekWjazdu(czas(), sportowiec, wyciag());
-            lista.dodaj(zdarzenie);
+            lista.add(zdarzenie);
         }
         Czas nastepnyPrzyjazd = Czas.dodaj(czas(), wyciag().odstepCzasu());
-        lista.dodaj(new ZdarzeniePrzyjazdWyciagu(nastepnyPrzyjazd, wyciag()));
+        lista.add(new ZdarzeniePrzyjazdWyciagu(nastepnyPrzyjazd, wyciag()));
 
-        return lista.naTablice();
+        return lista;
     }
 }
