@@ -64,6 +64,10 @@ public class Wyciag extends Polaczenie{
         return odstepCzasu;
     }
 
+    public long potencjalLiczbyPrzewiezionych(){
+        return potencjalLiczbyPrzewiezionych;
+    }
+
     public void zwiekszPotencjalLiczbyPrzewiezionych(){
         potencjalLiczbyPrzewiezionych += maksymalnaLiczbaOsob();
     }

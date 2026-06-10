@@ -22,6 +22,12 @@ public class Trasa extends Polaczenie {
     public int poziomTrudnosci(){
         return poziomTrudnosci;
     }
+    public double bazowaAtrakcyjnosc(){
+        return bazowaAtrakcyjnosc;
+    }
+    public double odpornosc(){
+        return odpornosc;
+    }
 
     // [0, 1]
     public double atrakcyjnoscNawierzchni(){

@@ -6,5 +6,11 @@ public class Main {
 
         Symulacja symulacja = new Symulacja();
         symulacja.symuluj();
+        try {
+            symulacja.tworzMapki("mapki/mapki");
+        }
+        catch (Exception e){
+            System.out.println("ERROR");
+        }
     }
 }

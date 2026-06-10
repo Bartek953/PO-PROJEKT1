@@ -1,7 +1,10 @@
 package pl.projekt;
 
+import kadra.mapki.pliki.WyjatekSystemuPlikow;
 import pl.projekt.cechy.Czas;
+import pl.projekt.mapki.TworcaMapek;
 import pl.projekt.osrodek.Trasa;
+import pl.projekt.osrodek.Wezel;
 import pl.projekt.osrodek.Wyciag;
 import pl.projekt.sportowcy.Sportowiec;
 import pl.projekt.strukturydanych.KolejkaZdarzen;
@@ -19,6 +22,7 @@ import java.util.Queue;
 
 public class Symulacja {
     private KolejkaZdarzen kolejkaZdarzen;
+    private Wezel[] listaWezlow;
     private Wyciag[] listaWyciagow;
     private Trasa[] listaTras;
     private Sportowiec[] listaSportowcow;
@@ -41,6 +45,7 @@ public class Symulacja {
         przetwarzacz.przetworz(skaner.wczytajTrasy());
         przetwarzacz.przetworz(skaner.wczytajGrupySportowcow());
 
+        listaWezlow = przetwarzacz.dajWezly();
         listaWyciagow = przetwarzacz.dajWyciagi();
         listaTras = przetwarzacz.dajTrasy();
         listaSportowcow = przetwarzacz.dajSportowcow();
@@ -97,5 +102,10 @@ public class Symulacja {
         for (Trasa trasa : listaTras){
             System.out.println(trasa.statystyki());
         }
+    }
+    public void tworzMapki(String folder) throws WyjatekSystemuPlikow {
+        TworcaMapek tworcaMapek = new TworcaMapek(folder);
+        tworcaMapek.tworzMapkeParametrow(listaWezlow, listaTras, listaWyciagow);
+        tworcaMapek.tworzMapkeStatystyk(listaWezlow, listaTras, listaWyciagow);
     }
 }
