@@ -1,6 +1,8 @@
 package pl.projekt.osrodek;
 
 import pl.projekt.cechy.Czas;
+import pl.projekt.sportowcy.Sportowiec;
+import pl.projekt.zdarzenia.Zdarzenie;
 
 public abstract class Polaczenie {
     private int numer;
@@ -34,5 +36,7 @@ public abstract class Polaczenie {
         liczbaPrzejazdow++;
     }
     public abstract String statystyki();
+
+    public abstract Zdarzenie stworzZdarzenie(Czas czas, Sportowiec sportowiec);
 
 }

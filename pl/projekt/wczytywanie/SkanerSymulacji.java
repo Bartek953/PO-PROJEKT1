@@ -96,19 +96,22 @@ public class SkanerSymulacji {
             int liczba = s1.nextInt();
             int poziom = s1.nextInt();
             double wspSpontanicznosci = s1.nextDouble();
+            double wspZnudzenia = s1.nextDouble();
+            String rodzajSportowca = s1.next();
             boolean sledzeni = s1.hasNext() && s1.next().equals("s");
 
             Scanner s2 = skanerLiniiAngielski();
             double wagaTrudnosci = s2.nextDouble();
             double wagaNawierzchni = s2.nextDouble();
+            double wagaZnudzenia = s2.nextDouble();
 
             Scanner s3 = skanerLinii();
             int numerWezla = s3.nextInt();
             String czasStr = s3.next();
             int odstep = (liczba > 1 && s3.hasNextInt()) ? s3.nextInt() : 0;
 
-            wynik[i] = new GrupaSportowcowDTO(liczba, poziom, wspSpontanicznosci, sledzeni,
-                    wagaTrudnosci, wagaNawierzchni, numerWezla, czasStr, odstep);
+            wynik[i] = new GrupaSportowcowDTO(liczba, poziom, wspSpontanicznosci, wspZnudzenia, sledzeni,
+                    wagaTrudnosci, wagaNawierzchni, wagaZnudzenia, numerWezla, czasStr, odstep, rodzajSportowca);
         }
         return wynik;
     }

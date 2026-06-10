@@ -1,6 +1,7 @@
 package pl.projekt.sportowcy;
 
 import pl.projekt.cechy.Czas;
+import pl.projekt.osrodek.Polaczenie;
 import pl.projekt.osrodek.Trasa;
 import pl.projekt.osrodek.Wezel;
 import pl.projekt.osrodek.Wyciag;
@@ -9,36 +10,44 @@ import pl.projekt.zdarzenia.sportowiec.ZdarzeniePoczatekTrasy;
 import pl.projekt.zdarzenia.sportowiec.ZdarzenieUstawienieWKolejce;
 
 import java.util.Random;
+import java.util.Map;
+import java.util.HashMap;
 
-public class Sportowiec {
+public abstract class Sportowiec {
     private static Random generator;
 
     private int numer;
     private int poziomZaawansowania; //0-10
     private double wspSpontanicznosci;
+    private double wspZnudzenia;
     private Wagi wagi;
     private boolean sledzony;
     private Wezel wezelStartowy;
     private Czas czasStartu;
+    private int licznikZjazdow;
 
-    public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, Wagi wagi, boolean sledzony, Wezel wezelStartowy, Czas czasStartu){
+    // Rekord do hashmapy
+    private record StanZnudzenia(int indeksOstatniegoZjazdu, double wartoscZnudzenia) {};
+    // klucz: nr_trasy
+    private Map<Integer, StanZnudzenia> mapaZnudzenia;
+
+    public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wspZnudzenia, Wagi wagi, boolean sledzony, Wezel wezelStartowy, Czas czasStartu){
         if (generator == null){
             generator = new Random();
         }
         this.numer = numer;
         this.poziomZaawansowania = poziomZaawansowania;
         this.wspSpontanicznosci = wspSpontanicznosci;
+        this.wspZnudzenia = wspZnudzenia;
         this.wagi = wagi;
         this.sledzony = sledzony;
         this.wezelStartowy = wezelStartowy;
         this.czasStartu = czasStartu;
+        this.licznikZjazdow = 0;
+        mapaZnudzenia = new HashMap<>();
     }
-    public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wagaTrudnosci, double wagaNawierzchni, boolean sledzony, Wezel wezelStartowy, Czas czasStartu){
-        this(numer, poziomZaawansowania, wspSpontanicznosci, new Wagi(wagaTrudnosci, wagaNawierzchni), sledzony, wezelStartowy, czasStartu);
-    }
-    // Konstruktor do testów klasy Sportowiec
-    public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wagaTrudnosci, double wagaNawierzchni, boolean sledzony){
-        this(numer, poziomZaawansowania, wspSpontanicznosci, new Wagi(wagaTrudnosci, wagaNawierzchni), sledzony, null, null);
+    public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wspZnudzenia, double wagaTrudnosci, double wagaNawierzchni, double wagaZnudzenia, boolean sledzony, Wezel wezelStartowy, Czas czasStartu){
+        this(numer, poziomZaawansowania, wspSpontanicznosci, wspZnudzenia, new Wagi(wagaTrudnosci, wagaNawierzchni, wagaZnudzenia), sledzony, wezelStartowy, czasStartu);
     }
     public int numer(){
         return numer;
@@ -51,6 +60,31 @@ public class Sportowiec {
     }
     public Czas czasStartu(){
         return czasStartu;
+    }
+
+    // Zwraca poziom znudzenia daną trasą: double w [0, 1]
+    public double poziomZnudzenia(Trasa trasa){
+        if (!mapaZnudzenia.containsKey(trasa.numer())){
+            return 0;
+        }
+        StanZnudzenia stan = mapaZnudzenia.get(trasa.numer());
+
+        if (stan.indeksOstatniegoZjazdu == licznikZjazdow){
+            return stan.wartoscZnudzenia;
+        }
+        else {
+            double wykladnik = licznikZjazdow - stan.indeksOstatniegoZjazdu;
+            double noweZnudzenie = stan.wartoscZnudzenia * Math.pow(1 - wspZnudzenia, wykladnik);
+            return noweZnudzenie;
+        }
+    }
+    // Wywoływane po przejechaniu daną trasą, by aktualizować jej wartość w hashmapie oraz lizcbe zjazdów.
+    public void aktualizujZnudzenie(Trasa trasa){
+        double stareZnudzenie = poziomZnudzenia(trasa);
+        licznikZjazdow++;
+        //xt = 1
+        double noweZnudzenie = wspZnudzenia + (1 - wspZnudzenia) * stareZnudzenie;
+        mapaZnudzenia.put(trasa.numer(), new StanZnudzenia(licznikZjazdow, noweZnudzenie));
     }
 
     // Zwraca liczbę z [0, 1]
@@ -70,79 +104,37 @@ public class Sportowiec {
     public double atrakcyjnoscTrasy(Trasa trasa){
         double atrakcyjnoscTrudnosci = dopasowanieTrudnosci(trasa);
         double atrakcyjnoscNawierzchni = trasa.atrakcyjnoscNawierzchni();
+        double znudzenie = poziomZnudzenia(trasa);
 
-        return wagi.lacznaAtrakcyjnosc(atrakcyjnoscTrudnosci, atrakcyjnoscNawierzchni);
+        return wagi.lacznaAtrakcyjnosc(atrakcyjnoscTrudnosci, atrakcyjnoscNawierzchni, znudzenie);
     }
 
     public boolean sledzony(){
         return sledzony;
     }
 
-    public Zdarzenie losowaDecyzja(Wezel wezel, Czas czas){
+    public Polaczenie losowePolaczenie(Wezel wezel){
         int n = wezel.trasy().size() + wezel.wyciagi().size();
         int wybor = generator.nextInt(0, n);
 
         if (wybor < wezel.trasy().size()){
-            Trasa wybranaTrasa = wezel.trasy().get(wybor);
-            wybranaTrasa.zwiekszLiczbePrzejazdow();
-            return new ZdarzeniePoczatekTrasy(czas, this, wybranaTrasa);
+            return wezel.trasy().get(wybor);
         }
         else {
-            int indeks = wybor - wezel.trasy().size();
-            Wyciag wybranyWyciag = wezel.wyciagi().get(indeks);
-            return new ZdarzenieUstawienieWKolejce(czas, this, wybranyWyciag);
+            wybor -= wezel.trasy().size();
+            return wezel.wyciagi().get(wybor);
         }
     }
 
-    // Znajduje najlepszą trasę wychodzącą z danego węzła (tylko z niego - nie patrzy na wyciągi).
-    // Zwraca null jeśli węzeł nie ma tras.
-    public Trasa wybierzNajlepszaTrase(Wezel wezel){
-        Trasa najlepszaTrasa = null;
+    public Zdarzenie losowaDecyzja(Wezel wezel, Czas czas){
+        return losowePolaczenie(wezel).stworzZdarzenie(czas, this);
+    }
 
-        for (int i = 0; i < wezel.trasy().size(); i++){
-            Trasa aktTrasa = wezel.trasy().get(i);
-
-            if (najlepszaTrasa == null || atrakcyjnoscTrasy(najlepszaTrasa) < atrakcyjnoscTrasy(aktTrasa)){
-                najlepszaTrasa = aktTrasa;
-            }
-        }
-        return najlepszaTrasa;
+    public boolean losujDecyzje(){
+        return generator.nextDouble() < wspSpontanicznosci;
     }
 
     // Podejmuje decyzję o akcji sportowca (wybór wyciągu lub trasy).
-    public Zdarzenie decyzja(Wezel wezel, Czas czas){
-        // Spontaniczny wybór sportowca:
-        if (generator.nextDouble() < wspSpontanicznosci){
-            return losowaDecyzja(wezel, czas);
-        }
-
-        Trasa najlepszaTrasa = wybierzNajlepszaTrase(wezel);
-        Wyciag najlepszyWyciag = null;
-
-        for (int i = 0; i < wezel.wyciagi().size(); i++){
-            Wyciag wyciag = wezel.wyciagi().get(i);
-            Trasa aktTrasa = wybierzNajlepszaTrase(wyciag.koniec());
-            if (najlepszaTrasa == null || (aktTrasa != null && atrakcyjnoscTrasy(najlepszaTrasa) < atrakcyjnoscTrasy(aktTrasa))){
-                najlepszaTrasa = aktTrasa;
-                najlepszyWyciag = wyciag;
-            }
-        }
-
-        if (najlepszaTrasa == null && wezel.wyciagi().size() != 0){
-            return new ZdarzenieUstawienieWKolejce(czas, this, wezel.wyciagi().get(0));
-        }
-
-        if (najlepszaTrasa == null){
-            throw new RuntimeException("Graf nie jest silnie spójny!");
-        }
-
-        if (najlepszaTrasa.start() == wezel){
-            najlepszaTrasa.zwiekszLiczbePrzejazdow();
-            return new ZdarzeniePoczatekTrasy(czas, this, najlepszaTrasa);
-        }
-        else {
-            return new ZdarzenieUstawienieWKolejce(czas, this, najlepszyWyciag);
-        }
-    }
+    public abstract Zdarzenie decyzja(Wezel wezel, Czas czas);
 
 }

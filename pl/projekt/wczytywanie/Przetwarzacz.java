@@ -4,6 +4,7 @@ import pl.projekt.cechy.Czas;
 import pl.projekt.osrodek.Trasa;
 import pl.projekt.osrodek.Wezel;
 import pl.projekt.osrodek.Wyciag;
+import pl.projekt.sportowcy.FabrykaSportowcow;
 import pl.projekt.sportowcy.Sportowiec;
 import pl.projekt.transferdanych.GrupaSportowcowDTO;
 import pl.projekt.transferdanych.TrasaDTO;
@@ -71,15 +72,19 @@ public class Przetwarzacz {
             Wezel wezelStart = wezly[g.numerWezlaStartowego()];
 
             for (int j = 0; j < g.liczba(); j++) {
-                sportowcy[liczbaSportowcow] = new Sportowiec(
+                sportowcy[liczbaSportowcow] = FabrykaSportowcow.stworzSportowca(
                         liczbaSportowcow,
                         g.poziomZaawansowania(),
                         g.wspSpontanicznosci(),
+                        g.wspZnudzenia(),
                         g.wagaTrudnosci(),
                         g.wagaNawierzchni(),
+                        g.wagaZnudzenia(),
                         g.sledzeni(),
                         wezelStart,
-                        new Czas(czasPrzyjazdu));
+                        new Czas(czasPrzyjazdu),
+                        g.rodzaj()
+                );
                 liczbaSportowcow++;
                 czasPrzyjazdu = Czas.dodaj(czasPrzyjazdu, odstep);
             }

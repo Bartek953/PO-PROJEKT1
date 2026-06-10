@@ -2,6 +2,8 @@ package pl.projekt.osrodek;
 
 import pl.projekt.cechy.Czas;
 import pl.projekt.sportowcy.Sportowiec;
+import pl.projekt.zdarzenia.Zdarzenie;
+import pl.projekt.zdarzenia.sportowiec.ZdarzenieUstawienieWKolejce;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -43,5 +45,10 @@ public class Wyciag extends Polaczenie{
     @Override
     public String statystyki(){
         return String.format("Liczba wjazdów wyciągiem %d to %d", numer(), liczbaPrzejazdow());
+    }
+
+    @Override
+    public Zdarzenie stworzZdarzenie(Czas czas, Sportowiec sportowiec){
+        return new ZdarzenieUstawienieWKolejce(czas, sportowiec, this);
     }
 }
