@@ -79,12 +79,24 @@ public abstract class Sportowiec {
         }
     }
     // Wywoływane po przejechaniu daną trasą, by aktualizować jej wartość w hashmapie oraz lizcbe zjazdów.
-    public void aktualizujZnudzenie(Trasa trasa){
+    private void aktualizujZnudzenie(Trasa trasa){
         double stareZnudzenie = poziomZnudzenia(trasa);
         licznikZjazdow++;
         //xt = 1
         double noweZnudzenie = wspZnudzenia + (1 - wspZnudzenia) * stareZnudzenie;
         mapaZnudzenia.put(trasa.numer(), new StanZnudzenia(licznikZjazdow, noweZnudzenie));
+    }
+
+    // Umożliwia klasom nadrzędnym modyfikacje zachowania końca zjazdu.
+    protected void akcjaPoZjezdzie(Trasa trasa){
+        return;
+    }
+
+    // Wywoływane po zjechaniu daną trasą. Udostępnia sportowcowi interfejs
+    // do wykonywania akcji wywoływanych przez koniec zjazdu.
+    public void zjechalTrasa(Trasa trasa){
+        aktualizujZnudzenie(trasa);
+        akcjaPoZjezdzie(trasa);
     }
 
     // Zwraca liczbę z [0, 1]

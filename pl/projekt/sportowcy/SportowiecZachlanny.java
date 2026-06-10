@@ -2,6 +2,7 @@ package pl.projekt.sportowcy;
 
 import pl.projekt.cechy.Czas;
 import pl.projekt.osrodek.Polaczenie;
+import pl.projekt.osrodek.Trasa;
 import pl.projekt.osrodek.Wezel;
 
 import java.util.LinkedList;
@@ -15,8 +16,7 @@ public class SportowiecZachlanny extends SportowiecPlanujacy {
     }
 
     @Override
-    public void stworzNowyPlan(Czas czas, Wezel wezel){
-        Polaczenie polaczenie = losowePolaczenie(wezel);
-        dodajDoPlanu(polaczenie);
+    public int porownaj(Trasa trasa1, int odl1, Trasa trasa2, int odl2){
+        return atrakcyjnoscTrasy(trasa1) < atrakcyjnoscTrasy(trasa2) ? -1 : 1;
     }
 }

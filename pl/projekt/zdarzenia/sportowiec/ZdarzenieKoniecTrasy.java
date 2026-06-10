@@ -31,7 +31,7 @@ public class ZdarzenieKoniecTrasy extends ZdarzenieRaportowe{
     public List<Zdarzenie> wykonaj(){
         // Raportowanie:
         super.wykonaj();
-        sportowiec().aktualizujZnudzenie(trasa);
+        sportowiec().zjechalTrasa(trasa);
         Zdarzenie nastepne = new ZdarzenieDecyzyjne(czas(), sportowiec(), trasa.koniec());
         List<Zdarzenie> lista = new ArrayList<>();
         lista.add(nastepne);

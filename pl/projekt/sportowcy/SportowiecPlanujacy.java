@@ -25,7 +25,10 @@ public abstract class SportowiecPlanujacy extends Sportowiec{
     public void dodajDoPlanu(Polaczenie polaczenie){
         aktualnyPlan.push(polaczenie);
     }
-    public abstract void stworzNowyPlan(Czas czas, Wezel wezel);
+    private void stworzNowyPlan(Czas czas, Wezel wezel){
+        BFS bfs = new BFS(wezel, this);
+        bfs.znajdzIZapiszPlan();
+    }
 
     @Override
     public Zdarzenie decyzja(Wezel wezel, Czas czas){
@@ -53,7 +56,6 @@ public abstract class SportowiecPlanujacy extends Sportowiec{
     // Porównywarka tras do bfs'a i tworzenia nowego planu
     // Zwraca:
     //  -1 jeśli trasa 1 jest gorsza od trasy 2
-    //  0 jeśli obie trasy są tak samo dobre
-    //  1 jeśli trasa 1 jest lepsza od trasy 2
+    //   1 jeśli trasa 1 jest lepsza od trasy 2
     public abstract int porownaj(Trasa trasa1, int odl1, Trasa trasa2, int odl2);
 }
