@@ -30,7 +30,10 @@ public class Trasa extends Polaczenie {
 
     @Override
     public String statystyki(){
-        return String.format("Liczba zjazdów trasą %d to %d", numer(), liczbaPrzejazdow());
+        return String.format("Statystyki trasy nr %d:\n" +
+                        "1) Łączna liczba zjazdów: %d\n" +
+                        "2) Wyrównanie nawierzchni na koniec dnia to: %.2f\n",
+                numer(), liczbaPrzejazdow(), atrakcyjnoscNawierzchni());
     }
 
     @Override

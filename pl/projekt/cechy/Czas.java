@@ -88,4 +88,10 @@ public class Czas {
         );
     }
 
+    // Zwraca odstęp czasu w sekundach
+    public static long roznica(Czas czas1, Czas czas2){
+        long interwal = czas1.sekunda() - czas2.sekunda() + 60 * (czas1.minuta() - czas2.minuta() + 60 * (czas1.godzina() - czas2.godzina()));
+        return Math.abs(interwal);
+    }
+
 }

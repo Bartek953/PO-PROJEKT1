@@ -23,7 +23,7 @@ public class ZdarzeniePrzyjazdWyciagu extends ZdarzenieWyciagu{
         int ileNaKanapie = 0;
         while (!wyciag().kolejkaPusta() && ileNaKanapie < wyciag().maksymalnaLiczbaOsob()){
             Sportowiec sportowiec = wyciag().pierwszyWKolejce();
-            wyciag().usunPierwszegoZKolejki();
+            wyciag().usunPierwszegoZKolejki(czas());
             ileNaKanapie++;
 
             Zdarzenie zdarzenie = new ZdarzeniePoczatekWjazdu(czas(), sportowiec, wyciag());
@@ -31,6 +31,8 @@ public class ZdarzeniePrzyjazdWyciagu extends ZdarzenieWyciagu{
         }
         Czas nastepnyPrzyjazd = Czas.dodaj(czas(), wyciag().odstepCzasu());
         lista.add(new ZdarzeniePrzyjazdWyciagu(nastepnyPrzyjazd, wyciag()));
+
+        wyciag().zwiekszPotencjalLiczbyPrzewiezionych();
 
         return lista;
     }

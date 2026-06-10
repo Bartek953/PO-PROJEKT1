@@ -26,7 +26,7 @@ public class ZdarzenieUstawienieWKolejce extends ZdarzenieRaportowe {
         // Raportowanie:
         super.wykonaj();
 
-        wyciag.dodajDoKolejki(sportowiec());
+        wyciag.dodajDoKolejki(czas(), sportowiec());
 
         return null;
     }

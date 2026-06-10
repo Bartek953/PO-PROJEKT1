@@ -12,6 +12,13 @@ public class Wyciag extends Polaczenie{
     private Czas odstepCzasu;
     private int maksymalnaLiczbaOsob;
     private Queue<Sportowiec> kolejkaOczekujacych;
+    private int maksymalnaDlugoscKolejki;
+    private long potencjalLiczbyPrzewiezionych;
+    private Czas ostatniaAktualizacjaKolejki;
+    private long sekundyRazyOsobyWKolejce;
+
+    private static final Czas czasOtwarcia = new Czas(9, 0, 0);
+    private static final Czas czasZamkniecia = new Czas(15, 0, 0);
 
     public Wyciag(int numer, Wezel wezel1, Wezel wezel2, int czasPrzejazdu, int odstepCzasu, int maksymalnaLiczbaOsob){
         super(numer, wezel1, wezel2, czasPrzejazdu);
@@ -19,17 +26,32 @@ public class Wyciag extends Polaczenie{
         this.odstepCzasu = new Czas(0, 0, odstepCzasu);
         this.maksymalnaLiczbaOsob = maksymalnaLiczbaOsob;
         kolejkaOczekujacych = new LinkedList<>();
+        maksymalnaDlugoscKolejki = 0;
+        potencjalLiczbyPrzewiezionych = 0;
+        ostatniaAktualizacjaKolejki = czasOtwarcia;
+        sekundyRazyOsobyWKolejce = 0;
 
         start().dodajWyciag(this);
     }
 
-    public void dodajDoKolejki(Sportowiec sportowiec){
+    private void aktualizujSrednia(Czas czas){
+        long interwal = Czas.roznica(czas, ostatniaAktualizacjaKolejki);
+        sekundyRazyOsobyWKolejce += kolejkaOczekujacych.size() * interwal;
+        ostatniaAktualizacjaKolejki = czas;
+    }
+
+    public void dodajDoKolejki(Czas czas, Sportowiec sportowiec){
+        aktualizujSrednia(czas);
+
         kolejkaOczekujacych.offer(sportowiec);
+        maksymalnaDlugoscKolejki = Math.max(maksymalnaDlugoscKolejki, kolejkaOczekujacych.size());
     }
     public Sportowiec pierwszyWKolejce(){
         return kolejkaOczekujacych.peek();
     }
-    public void usunPierwszegoZKolejki(){
+    public void usunPierwszegoZKolejki(Czas czas){
+        aktualizujSrednia(czas);
+
         kolejkaOczekujacych.poll();
     }
     public boolean kolejkaPusta(){
@@ -42,9 +64,32 @@ public class Wyciag extends Polaczenie{
         return odstepCzasu;
     }
 
+    public void zwiekszPotencjalLiczbyPrzewiezionych(){
+        potencjalLiczbyPrzewiezionych += maksymalnaLiczbaOsob();
+    }
+
+    public int maksymalnaDlugoscKolejki(){
+        return maksymalnaDlugoscKolejki;
+    }
+    public double sredniaDlugoscKolejki(){
+        long interwal = Czas.roznica(czasZamkniecia, czasOtwarcia);
+        return (double)sekundyRazyOsobyWKolejce / (double)interwal;
+    }
+
+    public int procentZajetychMiejsc(){
+        return (int)(100 * liczbaPrzejazdow() / potencjalLiczbyPrzewiezionych);
+    }
+
     @Override
     public String statystyki(){
-        return String.format("Liczba wjazdów wyciągiem %d to %d", numer(), liczbaPrzejazdow());
+        aktualizujSrednia(czasZamkniecia);
+        return String.format("Statystyki wyciągu nr %d:\n" +
+                        "1) Maksymalna długość kolejki: %d\n" +
+                        "2) Średnia długość kolejki: %.2f\n" +
+                        "3) Łączna liczba przewiezionych pasażerów: %d\n" +
+                        "4) Procent zajętych miejsc: %d %% \n",
+                numer(), maksymalnaDlugoscKolejki(), sredniaDlugoscKolejki(),
+                liczbaPrzejazdow(), procentZajetychMiejsc());
     }
 
     @Override
