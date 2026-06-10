@@ -107,5 +107,10 @@ public class Symulacja {
         TworcaMapek tworcaMapek = new TworcaMapek(folder);
         tworcaMapek.tworzMapkeParametrow(listaWezlow, listaTras, listaWyciagow);
         tworcaMapek.tworzMapkeStatystyk(listaWezlow, listaTras, listaWyciagow);
+        for (Sportowiec sportowiec : listaSportowcow){
+            if (sportowiec.sledzony()){
+                tworcaMapek.tworzMapeSportowca(sportowiec, listaWezlow, listaTras, listaWyciagow);
+            }
+        }
     }
 }

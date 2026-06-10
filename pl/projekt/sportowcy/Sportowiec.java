@@ -9,6 +9,7 @@ import pl.projekt.zdarzenia.Zdarzenie;
 import pl.projekt.zdarzenia.sportowiec.ZdarzeniePoczatekTrasy;
 import pl.projekt.zdarzenia.sportowiec.ZdarzenieUstawienieWKolejce;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Map;
 import java.util.HashMap;
@@ -25,6 +26,8 @@ public abstract class Sportowiec {
     private Wezel wezelStartowy;
     private Czas czasStartu;
     private int licznikZjazdow;
+    private Map<Polaczenie, ArrayList<Integer>> mapaPrzejazdow;
+    private int numerPrzejazdu;
 
     // Rekord do hashmapy
     private record StanZnudzenia(int indeksOstatniegoZjazdu, double wartoscZnudzenia) {};
@@ -45,6 +48,11 @@ public abstract class Sportowiec {
         this.czasStartu = czasStartu;
         this.licznikZjazdow = 0;
         mapaZnudzenia = new HashMap<>();
+
+        if (sledzony){
+            numerPrzejazdu = 1;
+            mapaPrzejazdow = new HashMap<>();
+        }
     }
     public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wspZnudzenia, double wagaTrudnosci, double wagaNawierzchni, double wagaZnudzenia, boolean sledzony, Wezel wezelStartowy, Czas czasStartu){
         this(numer, poziomZaawansowania, wspSpontanicznosci, wspZnudzenia, new Wagi(wagaTrudnosci, wagaNawierzchni, wagaZnudzenia), sledzony, wezelStartowy, czasStartu);
@@ -92,11 +100,45 @@ public abstract class Sportowiec {
         return;
     }
 
+    private void aktualizujMapePrzejazdow(Polaczenie polaczenie){
+        if (!sledzony()){
+            throw new RuntimeException("Nieśledzony sportowiec wywołał metodę sportowca śledzonego");
+        }
+        if (!mapaPrzejazdow.containsKey(polaczenie)){
+            mapaPrzejazdow.put(polaczenie, new ArrayList<>());
+        }
+        mapaPrzejazdow.get(polaczenie).add(numerPrzejazdu);
+        numerPrzejazdu++;
+    }
+    public int liczbaPrzejazdow(Polaczenie polaczenie){
+        if (!sledzony()){
+            throw new RuntimeException("Nieśledzony sportowiec wywołał metodę sportowca śledzonego");
+        }
+        if (!mapaPrzejazdow.containsKey(polaczenie)){
+            return 0;
+        }
+        return mapaPrzejazdow.get(polaczenie).size();
+    }
+    public ArrayList<Integer> listaPrzejazdow(Polaczenie polaczenie){
+        if (!sledzony()){
+            throw new RuntimeException("Nieśledzony sportowiec wywołał metodę sportowca śledzonego");
+        }
+        return mapaPrzejazdow.getOrDefault(polaczenie, null);
+    }
+
     // Wywoływane po zjechaniu daną trasą. Udostępnia sportowcowi interfejs
     // do wykonywania akcji wywoływanych przez koniec zjazdu.
     public void zjechalTrasa(Trasa trasa){
         aktualizujZnudzenie(trasa);
         akcjaPoZjezdzie(trasa);
+        if (sledzony()){
+            aktualizujMapePrzejazdow(trasa);
+        }
+    }
+    public void wjechalWyciagiem(Wyciag wyciag){
+        if (sledzony()){
+            aktualizujMapePrzejazdow(wyciag);
+        }
     }
 
     // Zwraca liczbę z [0, 1]

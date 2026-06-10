@@ -32,6 +32,7 @@ public class ZdarzenieKoniecWjazdu extends ZdarzenieRaportowe{
     public List<Zdarzenie> wykonaj(){
         // Raportowanie:
         super.wykonaj();
+        sportowiec().wjechalWyciagiem(wyciag);
 
         wyciag.zwiekszLiczbePrzejazdow();
         Zdarzenie nastepne = new ZdarzenieDecyzyjne(czas(), sportowiec(), wyciag.koniec());
