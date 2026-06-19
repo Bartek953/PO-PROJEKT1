@@ -11,7 +11,10 @@ import java.util.*;
 // Wymaga implementacji porownaj(Trasa trasa1, int odl1, Trasa trasa2, int odl2)
 // przez sportowcow planujacych
 public class BFS {
-    private SportowiecPlanujacy sportowiec;
+    private int wezelDocelowy;
+    private Polaczenie ostatniePolaczenie;
+
+    private KomparatorTras komparator;
     private Wezel wezelStartowy;
     private Trasa najlepszaTrasa;
     private int odlegloscNajlepszejTrasy;
@@ -19,12 +22,20 @@ public class BFS {
     private record StanPolaczenia(int odleglosc, Polaczenie poprzednik){};
     private Map<Polaczenie, StanPolaczenia> mapaStanow;
 
-    public BFS(Wezel wezelStartowy, SportowiecPlanujacy sportowiec){
+    // Do wyszukiwania trasy
+    public BFS(Wezel wezelStartowy, KomparatorTras komparator){
         this.wezelStartowy = wezelStartowy;
-        this.sportowiec = sportowiec;
+        this.komparator = komparator;
         this.kolejka = new LinkedList<>();
         this.mapaStanow = new HashMap<>();
         this.najlepszaTrasa = null;
+        ostatniePolaczenie = null;
+    }
+
+    //Do wyszukiwania trasy do celu
+    public BFS(Wezel wezelStartowy, int wezelDocelowy){
+        this(wezelStartowy, null);
+        this.wezelDocelowy = wezelDocelowy;
     }
 
     private void dodajNastepne(int odleglosc, Wezel wezel, Polaczenie poprzednik){
@@ -33,15 +44,18 @@ public class BFS {
 
         for (Trasa trasa : listaTras){
             if (mapaStanow.containsKey(trasa)){
-                // Trasa została już owiedzona.
+                // Trasa została już odwiedzona.
                 continue;
             }
             mapaStanow.put(trasa, new StanPolaczenia(odleglosc, poprzednik));
             kolejka.offer(trasa);
-            if (najlepszaTrasa == null ||
-                    sportowiec.porownaj(trasa, odleglosc, najlepszaTrasa, odlegloscNajlepszejTrasy) >= 0){
+            if (komparator != null && (najlepszaTrasa == null ||
+                    komparator.porownaj(trasa, odleglosc, najlepszaTrasa, odlegloscNajlepszejTrasy) >= 0)){
                 najlepszaTrasa = trasa;
                 odlegloscNajlepszejTrasy = odleglosc;
+            }
+            if (komparator == null && trasa.koniec().numer() == wezelDocelowy && ostatniePolaczenie == null){
+                ostatniePolaczenie = trasa;
             }
         }
         for (Wyciag wyciag : listaWyciagow){
@@ -51,6 +65,9 @@ public class BFS {
             }
             mapaStanow.put(wyciag, new StanPolaczenia(odleglosc, poprzednik));
             kolejka.offer(wyciag);
+            if (komparator == null && wyciag.koniec().numer() == wezelDocelowy && ostatniePolaczenie == null){
+                ostatniePolaczenie = wyciag;
+            }
         }
     }
 
@@ -71,19 +88,37 @@ public class BFS {
         }
         return najlepszaTrasa;
     }
+    private Polaczenie ostatniePolaczenie(){
+        if (ostatniePolaczenie == null){
+            throw new RuntimeException("Nie znaleziono ostatniego połączenia");
+        }
+        return ostatniePolaczenie;
+    }
 
-    private void zapiszPlan(){
-        Polaczenie polaczenie = najlepszaTrasa();
+    private Stack<Polaczenie> budujPlan(){
+        Stack<Polaczenie> plan = new Stack<>();
+        Polaczenie polaczenie = null;
+
+        if (komparator != null){
+            polaczenie = najlepszaTrasa;
+        }
+        else {
+            polaczenie = ostatniePolaczenie;
+        }
 
         while (polaczenie != null){
-            sportowiec.dodajDoPlanu(polaczenie);
+            plan.push(polaczenie);
             StanPolaczenia stan = mapaStanow.get(polaczenie);
             polaczenie = stan.poprzednik;
         }
+        return plan;
     }
 
-    public void znajdzIZapiszPlan(){
+    public Stack<Polaczenie> znajdzPlan(){
+        if (komparator == null && wezelStartowy.numer() == wezelDocelowy){
+            return new Stack<>();
+        }
         znajdzNajlepszaTrase();
-        zapiszPlan();
+        return budujPlan();
     }
 }

@@ -22,12 +22,9 @@ public abstract class SportowiecPlanujacy extends Sportowiec{
     public boolean wykonujePlan(){
         return !aktualnyPlan.isEmpty();
     }
-    public void dodajDoPlanu(Polaczenie polaczenie){
-        aktualnyPlan.push(polaczenie);
-    }
     private void stworzNowyPlan(Czas czas, Wezel wezel){
-        BFS bfs = new BFS(wezel, this);
-        bfs.znajdzIZapiszPlan();
+        BFS bfs = new BFS(wezel, this::porownaj);
+        aktualnyPlan = bfs.znajdzPlan();
     }
 
     @Override

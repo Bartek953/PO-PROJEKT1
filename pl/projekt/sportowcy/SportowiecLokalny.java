@@ -51,7 +51,8 @@ public class SportowiecLokalny extends Sportowiec{
         }
 
         if (najlepszaTrasa == null && wezel.wyciagi().size() != 0){
-            return new ZdarzenieUstawienieWKolejce(czas, this, wezel.wyciagi().get(0));
+            //return new ZdarzenieUstawienieWKolejce(czas, this, wezel.wyciagi().get(0));
+            return wezel.wyciagi().get(0).stworzZdarzenie(czas, this);
         }
         else if (najlepszaTrasa == null){
             throw new RuntimeException("Graf nie jest silnie spójny!");

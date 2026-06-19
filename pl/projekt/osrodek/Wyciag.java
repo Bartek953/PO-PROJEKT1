@@ -57,6 +57,9 @@ public class Wyciag extends Polaczenie{
     public boolean kolejkaPusta(){
         return kolejkaOczekujacych.isEmpty();
     }
+    public int aktualnaDlugoscKolejki(){
+        return kolejkaOczekujacych.size();
+    }
     public int maksymalnaLiczbaOsob(){
         return maksymalnaLiczbaOsob;
     }
@@ -81,7 +84,7 @@ public class Wyciag extends Polaczenie{
     }
 
     public int procentZajetychMiejsc(){
-        return (int)(100 * liczbaPrzejazdow() / potencjalLiczbyPrzewiezionych);
+        return (int)(100L * liczbaPrzejazdow() / potencjalLiczbyPrzewiezionych);
     }
 
     @Override
