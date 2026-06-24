@@ -5,11 +5,11 @@ import pl.projekt.sportowcy.Sportowiec;
 import java.util.List;
 
 public abstract class Zdarzenie implements Comparable<Zdarzenie> {
-    private static long aktualnaKolejnosc;
+    private static long aktualnaKolejnosc = 0;
     private final Priorytet priorytet;
 
-    private Czas czas;
-    private long kolejnosc;
+    private final Czas czas;
+    private final long kolejnosc;
 
     public Zdarzenie(Czas czas, Priorytet priorytet){
         this.czas = czas;

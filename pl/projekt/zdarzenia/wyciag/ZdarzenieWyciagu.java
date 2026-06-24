@@ -6,7 +6,7 @@ import pl.projekt.zdarzenia.Priorytet;
 import pl.projekt.zdarzenia.Zdarzenie;
 
 public abstract class ZdarzenieWyciagu extends Zdarzenie {
-    private Wyciag wyciag;
+    private final Wyciag wyciag;
 
     public ZdarzenieWyciagu(Czas czas, Wyciag wyciag, Priorytet priorytet){
         super(czas, priorytet);

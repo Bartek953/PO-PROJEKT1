@@ -6,9 +6,9 @@ import pl.projekt.zdarzenia.Zdarzenie;
 import pl.projekt.zdarzenia.sportowiec.ZdarzeniePoczatekTrasy;
 
 public class Trasa extends Polaczenie {
-    private int poziomTrudnosci; // 0-10
-    private double odpornosc; // (0, 1]
-    private double bazowaAtrakcyjnosc; // [0, 1]
+    private final int poziomTrudnosci; // 0-10
+    private final double odpornosc; // (0, 1]
+    private final double bazowaAtrakcyjnosc; // [0, 1]
 
     public Trasa(int numer, Wezel wezel1, Wezel wezel2, int czasPrzejazdu, int poziomTrudnosci, double odpornosc, double bazowaAtrakcyjnosc){
         super(numer, wezel1, wezel2, czasPrzejazdu);

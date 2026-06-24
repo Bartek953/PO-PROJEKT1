@@ -2,9 +2,9 @@ package pl.projekt.sportowcy;
 
 public class Wagi {
     // wagi są w [0, 1]
-    private double dopasowanieTrudnosci;
-    private double wyrownanieNawierzchni;
-    private double wagaZnudzenia;
+    private final double dopasowanieTrudnosci;
+    private final double wyrownanieNawierzchni;
+    private final double wagaZnudzenia;
 
     public Wagi(double dopasowanieTrudnosci, double wyrownanieNawierzchni, double wagaZnudzenia){
         this.dopasowanieTrudnosci = dopasowanieTrudnosci;

@@ -12,7 +12,7 @@ import java.util.List;
 
 // Odpowiada za przybycie sportowca do wezla i wybor nastepnej trasy, nie jest raportowane
 public class ZdarzenieDecyzyjne extends ZdarzenieSportowca {
-    private Wezel wezel;
+    private final Wezel wezel;
 
     public ZdarzenieDecyzyjne(Czas czas, Sportowiec sportowiec, Wezel wezel){
         super(czas, sportowiec, Priorytet.ZDARZENIE_NATYCHMIASTOWE);

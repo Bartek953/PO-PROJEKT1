@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SportowiecKolekcjoner extends SportowiecPlanujacy{
-    private Map<Trasa, Integer> mapaLiczbyZjazdow;
+    private final Map<Trasa, Integer> mapaLiczbyZjazdow;
     public SportowiecKolekcjoner(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wspZnudzenia, Wagi wagi, boolean sledzony, Wezel wezelStartowy, Czas czasStartu){
         super(numer, poziomZaawansowania, wspSpontanicznosci, wspZnudzenia, wagi, sledzony, wezelStartowy, czasStartu);
         mapaLiczbyZjazdow = new HashMap<>();
@@ -19,13 +19,13 @@ public class SportowiecKolekcjoner extends SportowiecPlanujacy{
     }
 
     @Override
-    public void akcjaPoZjezdzie(Trasa trasa){
+    protected void akcjaPoZjezdzie(Trasa trasa){
         int liczbaZjazdow = mapaLiczbyZjazdow.getOrDefault(trasa, 0) + 1;
         mapaLiczbyZjazdow.put(trasa, liczbaZjazdow);
     }
 
     @Override
-    public int porownaj(Trasa trasa1, int odl1, Trasa trasa2, int odl2){
+    protected int porownaj(Trasa trasa1, int odl1, Trasa trasa2, int odl2){
         int liczbaZjazdow1 = mapaLiczbyZjazdow.getOrDefault(trasa1, 0);
         int liczbaZjazdow2 = mapaLiczbyZjazdow.getOrDefault(trasa2, 0);
 

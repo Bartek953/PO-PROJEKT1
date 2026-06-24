@@ -16,7 +16,7 @@ public class SportowiecZachlanny extends SportowiecPlanujacy {
     }
 
     @Override
-    public int porownaj(Trasa trasa1, int odl1, Trasa trasa2, int odl2){
+    protected int porownaj(Trasa trasa1, int odl1, Trasa trasa2, int odl2){
         return atrakcyjnoscTrasy(trasa1) < atrakcyjnoscTrasy(trasa2) ? -1 : 1;
     }
 }

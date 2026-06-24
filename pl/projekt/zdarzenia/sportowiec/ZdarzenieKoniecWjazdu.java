@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ZdarzenieKoniecWjazdu extends ZdarzenieRaportowe{
-    private Wyciag wyciag;
+    private final Wyciag wyciag;
 
     public ZdarzenieKoniecWjazdu(Czas czas, Sportowiec sportowiec, Wyciag wyciag){
         super(czas, sportowiec, Priorytet.ZDARZENIE_NORMALNE);

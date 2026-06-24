@@ -10,17 +10,24 @@ import java.util.*;
 // Klasa zapewnia metody przeszukiwania grafu dla sportowców planujących
 // Wymaga implementacji porownaj(Trasa trasa1, int odl1, Trasa trasa2, int odl2)
 // przez sportowcow planujacych
+
+// Z racji, że dla sportowca planującego ważne jest wyszukanie ścieżki do trasy,
+// a nie węzła i w ogólności logika (np plan) operuje na połączeniach,
+// to bfs odbywa sie na nowym grafie, w którym wierzchołkami są połączenia.
+
+// Tak jak wspomniano na forum, implikuje to pewne problemy przy testowaniu,
+// stąd dodatkowe metody ułatwiające testowanie.
 public class BFS {
     private int wezelDocelowy;
     private Polaczenie ostatniePolaczenie;
 
-    private KomparatorTras komparator;
-    private Wezel wezelStartowy;
+    private final KomparatorTras komparator;
+    private final Wezel wezelStartowy;
     private Trasa najlepszaTrasa;
     private int odlegloscNajlepszejTrasy;
-    private Queue<Polaczenie> kolejka;
+    private final Queue<Polaczenie> kolejka;
     private record StanPolaczenia(int odleglosc, Polaczenie poprzednik){};
-    private Map<Polaczenie, StanPolaczenia> mapaStanow;
+    private final Map<Polaczenie, StanPolaczenia> mapaStanow;
 
     // Do wyszukiwania trasy
     public BFS(Wezel wezelStartowy, KomparatorTras komparator){

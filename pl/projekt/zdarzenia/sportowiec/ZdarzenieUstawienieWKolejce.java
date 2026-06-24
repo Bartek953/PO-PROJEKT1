@@ -10,7 +10,7 @@ import pl.projekt.zdarzenia.Zdarzenie;
 import java.util.List;
 
 public class ZdarzenieUstawienieWKolejce extends ZdarzenieRaportowe {
-    private Wyciag wyciag;
+    private final Wyciag wyciag;
     public ZdarzenieUstawienieWKolejce(Czas czas, Sportowiec sportowiec, Wyciag wyciag){
         super(czas, sportowiec, Priorytet.ZDARZENIE_NATYCHMIASTOWE);
         this.wyciag = wyciag;

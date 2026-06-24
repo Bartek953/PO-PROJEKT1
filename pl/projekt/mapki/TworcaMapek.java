@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.function.Function;
 
 public class TworcaMapek {
-    private GeneratorMapek generatorMapek;
+    private final GeneratorMapek generatorMapek;
 
     public TworcaMapek(String folder) throws WyjatekSystemuPlikow {
         generatorMapek = new GeneratorMapek(folder);

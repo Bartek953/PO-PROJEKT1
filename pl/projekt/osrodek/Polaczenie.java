@@ -5,9 +5,9 @@ import pl.projekt.sportowcy.Sportowiec;
 import pl.projekt.zdarzenia.Zdarzenie;
 
 public abstract class Polaczenie {
-    private int numer;
-    private Wezel start, koniec;
-    private Czas czasPrzejazdu;
+    private final int numer;
+    private final Wezel start, koniec;
+    private final Czas czasPrzejazdu;
     private int liczbaPrzejazdow;
 
     public Polaczenie(int numer, Wezel start, Wezel koniec, int czasPrzejazdu){

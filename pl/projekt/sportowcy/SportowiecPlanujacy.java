@@ -19,7 +19,7 @@ public abstract class SportowiecPlanujacy extends Sportowiec{
         this(numer, poziomZaawansowania, wspSpontanicznosci, wspZnudzenia, new Wagi(wagaTrudnosci, wagaNawierzchni, wagaZnudzenia), sledzony, wezelStartowy, czasStartu);
     }
 
-    public boolean wykonujePlan(){
+    private boolean wykonujePlan(){
         return !aktualnyPlan.isEmpty();
     }
     private void stworzNowyPlan(Czas czas, Wezel wezel){
@@ -54,5 +54,5 @@ public abstract class SportowiecPlanujacy extends Sportowiec{
     // Zwraca:
     //  -1 jeśli trasa 1 jest gorsza od trasy 2
     //   1 jeśli trasa 1 jest lepsza od trasy 2
-    public abstract int porownaj(Trasa trasa1, int odl1, Trasa trasa2, int odl2);
+    protected abstract int porownaj(Trasa trasa1, int odl1, Trasa trasa2, int odl2);
 }

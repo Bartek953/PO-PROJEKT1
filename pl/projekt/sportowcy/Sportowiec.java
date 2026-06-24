@@ -17,14 +17,14 @@ import java.util.HashMap;
 public abstract class Sportowiec {
     private static Random generator;
 
-    private int numer;
-    private int poziomZaawansowania; //0-10
-    private double wspSpontanicznosci;
-    private double wspZnudzenia;
-    private Wagi wagi;
-    private boolean sledzony;
-    private Wezel wezelStartowy;
-    private Czas czasStartu;
+    private final int numer;
+    private final int poziomZaawansowania; //0-10
+    private final double wspSpontanicznosci;
+    private final double wspZnudzenia;
+    private final Wagi wagi;
+    private final boolean sledzony;
+    private final Wezel wezelStartowy;
+    private final Czas czasStartu;
     private int licznikZjazdow;
     private Map<Polaczenie, ArrayList<Integer>> mapaPrzejazdow;
     private int numerPrzejazdu;
@@ -32,9 +32,18 @@ public abstract class Sportowiec {
     // Rekord do hashmapy
     private record StanZnudzenia(int indeksOstatniegoZjazdu, double wartoscZnudzenia) {};
     // klucz: nr_trasy
-    private Map<Integer, StanZnudzenia> mapaZnudzenia;
+    private final Map<Integer, StanZnudzenia> mapaZnudzenia;
 
-    public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wspZnudzenia, Wagi wagi, boolean sledzony, Wezel wezelStartowy, Czas czasStartu){
+    public Sportowiec(
+            int numer,
+            int poziomZaawansowania,
+            double wspSpontanicznosci,
+            double wspZnudzenia,
+            Wagi wagi,
+            boolean sledzony,
+            Wezel wezelStartowy,
+            Czas czasStartu){
+
         if (generator == null){
             generator = new Random();
         }
@@ -54,8 +63,28 @@ public abstract class Sportowiec {
             mapaPrzejazdow = new HashMap<>();
         }
     }
-    public Sportowiec(int numer, int poziomZaawansowania, double wspSpontanicznosci, double wspZnudzenia, double wagaTrudnosci, double wagaNawierzchni, double wagaZnudzenia, boolean sledzony, Wezel wezelStartowy, Czas czasStartu){
-        this(numer, poziomZaawansowania, wspSpontanicznosci, wspZnudzenia, new Wagi(wagaTrudnosci, wagaNawierzchni, wagaZnudzenia), sledzony, wezelStartowy, czasStartu);
+    public Sportowiec(
+            int numer,
+            int poziomZaawansowania,
+            double wspSpontanicznosci,
+            double wspZnudzenia,
+            double wagaTrudnosci,
+            double wagaNawierzchni,
+            double wagaZnudzenia,
+            boolean sledzony,
+            Wezel wezelStartowy,
+            Czas czasStartu){
+
+        this(
+                numer,
+                poziomZaawansowania,
+                wspSpontanicznosci,
+                wspZnudzenia,
+                new Wagi(wagaTrudnosci, wagaNawierzchni, wagaZnudzenia),
+                sledzony,
+                wezelStartowy,
+                czasStartu
+        );
     }
     public int numer(){
         return numer;
@@ -147,7 +176,7 @@ public abstract class Sportowiec {
             return 0;
         }
         else if (poziomZaawansowania() > trasa.poziomTrudnosci()){
-            return Math.max((double)0.2, (1.0 - (double)(poziomZaawansowania() - trasa.poziomTrudnosci()) / 7.0));
+            return Math.max(0.2, (1.0 - (double)(poziomZaawansowania() - trasa.poziomTrudnosci()) / 7.0));
         }
         else {
             return 1.0 - (double)(trasa.poziomTrudnosci() - poziomZaawansowania()) / 5.0;
@@ -167,7 +196,7 @@ public abstract class Sportowiec {
         return sledzony;
     }
 
-    public Polaczenie losowePolaczenie(Wezel wezel){
+    private Polaczenie losowePolaczenie(Wezel wezel){
         int n = wezel.trasy().size() + wezel.wyciagi().size();
         int wybor = generator.nextInt(0, n);
 
@@ -180,11 +209,11 @@ public abstract class Sportowiec {
         }
     }
 
-    public Zdarzenie losowaDecyzja(Wezel wezel, Czas czas){
+    protected Zdarzenie losowaDecyzja(Wezel wezel, Czas czas){
         return losowePolaczenie(wezel).stworzZdarzenie(czas, this);
     }
 
-    public boolean losujDecyzje(){
+    protected boolean losujDecyzje(){
         return generator.nextDouble() < wspSpontanicznosci;
     }
 

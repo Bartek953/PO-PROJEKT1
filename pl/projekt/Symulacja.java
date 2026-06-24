@@ -21,7 +21,7 @@ import java.util.Queue;
 
 
 public class Symulacja {
-    private KolejkaZdarzen kolejkaZdarzen;
+    private final KolejkaZdarzen kolejkaZdarzen;
     private Wezel[] listaWezlow;
     private Wyciag[] listaWyciagow;
     private Trasa[] listaTras;

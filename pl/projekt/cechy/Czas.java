@@ -2,13 +2,13 @@ package pl.projekt.cechy;
 
 
 public class Czas {
-    private int godzina;
-    private int minuta;
-    private int sekunda;
+    private final int godzina;
+    private final int minuta;
+    private final int sekunda;
 
     public Czas(int godzina, int minuta, int sekunda){
         if (godzina < 0 || minuta < 0 || sekunda < 0){
-            throw new RuntimeException("Niepoprawny format czasu");
+            throw new IllegalArgumentException("Niepoprawny format czasu");
         }
         minuta += sekunda / 60;
         this.sekunda = sekunda % 60;
@@ -17,7 +17,7 @@ public class Czas {
         this.minuta = minuta % 60;
 
         if (godzina > 23){
-            throw new RuntimeException("Niepoprawny format czasu");
+            throw new IllegalArgumentException("Niepoprawny format czasu");
         }
         this.godzina = godzina;
     }

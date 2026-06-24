@@ -9,9 +9,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Wyciag extends Polaczenie{
-    private Czas odstepCzasu;
-    private int maksymalnaLiczbaOsob;
-    private Queue<Sportowiec> kolejkaOczekujacych;
+    private final Czas odstepCzasu;
+    private final int maksymalnaLiczbaOsob;
+    private final Queue<Sportowiec> kolejkaOczekujacych;
     private int maksymalnaDlugoscKolejki;
     private long potencjalLiczbyPrzewiezionych;
     private Czas ostatniaAktualizacjaKolejki;
@@ -47,9 +47,15 @@ public class Wyciag extends Polaczenie{
         maksymalnaDlugoscKolejki = Math.max(maksymalnaDlugoscKolejki, kolejkaOczekujacych.size());
     }
     public Sportowiec pierwszyWKolejce(){
+        if (kolejkaOczekujacych.isEmpty()){
+            throw new RuntimeException("Próba dostępu do elementu pustej kolejki wyciągowej");
+        }
         return kolejkaOczekujacych.peek();
     }
     public void usunPierwszegoZKolejki(Czas czas){
+        if (kolejkaOczekujacych.isEmpty()){
+            throw new RuntimeException("Próba usunięcia elementu z pustej kolejki wyciągowej");
+        }
         aktualizujSrednia(czas);
 
         kolejkaOczekujacych.poll();

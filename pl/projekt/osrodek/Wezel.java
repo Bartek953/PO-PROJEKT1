@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Wezel {
-    private int numer;
-    private int wysokosc;
-    private Wspolrzedne wspolrzedne;
-    private boolean skomunikowany;
-    private List<Trasa> trasy;
-    private List<Wyciag> wyciagi;
+    private final int numer;
+    private final int wysokosc;
+    private final Wspolrzedne wspolrzedne;
+    private final boolean skomunikowany;
+    private final List<Trasa> trasy;
+    private final List<Wyciag> wyciagi;
 
     public Wezel(int numer, int wysokosc, Wspolrzedne wspolrzedne, boolean skomunikowany){
         this.numer = numer;

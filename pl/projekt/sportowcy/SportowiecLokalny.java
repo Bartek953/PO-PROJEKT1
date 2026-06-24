@@ -17,7 +17,7 @@ public class SportowiecLokalny extends Sportowiec{
 
     // Znajduje najlepszą trasę wychodzącą z danego węzła (tylko z niego - nie patrzy na wyciągi).
     // Zwraca null jeśli węzeł nie ma tras.
-    public Trasa wybierzNajlepszaTrase(Wezel wezel){
+    private Trasa wybierzNajlepszaTrase(Wezel wezel){
         Trasa najlepszaTrasa = null;
 
         for (int i = 0; i < wezel.trasy().size(); i++){
@@ -43,9 +43,10 @@ public class SportowiecLokalny extends Sportowiec{
 
         for (int i = 0; i < wezel.wyciagi().size(); i++){
             Wyciag wyciag = wezel.wyciagi().get(i);
-            Trasa aktTrasa = wybierzNajlepszaTrase(wyciag.koniec());
-            if (najlepszaTrasa == null || (aktTrasa != null && atrakcyjnoscTrasy(najlepszaTrasa) < atrakcyjnoscTrasy(aktTrasa))){
-                najlepszaTrasa = aktTrasa;
+            Trasa obecnaTrasa = wybierzNajlepszaTrase(wyciag.koniec());
+            if (najlepszaTrasa == null ||
+                    (obecnaTrasa != null && atrakcyjnoscTrasy(najlepszaTrasa) < atrakcyjnoscTrasy(obecnaTrasa))){
+                najlepszaTrasa = obecnaTrasa;
                 najlepszyWyciag = wyciag;
             }
         }
