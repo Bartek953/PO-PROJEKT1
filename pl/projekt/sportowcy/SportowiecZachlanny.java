@@ -18,5 +18,6 @@ public class SportowiecZachlanny extends SportowiecPlanujacy {
     @Override
     protected int porownaj(Trasa trasa1, int odl1, Trasa trasa2, int odl2){
         return atrakcyjnoscTrasy(trasa1) < atrakcyjnoscTrasy(trasa2) ? -1 : 1;
+        // W treści jest napisane, że w razie remisu wybiera się dowolny.
     }
 }

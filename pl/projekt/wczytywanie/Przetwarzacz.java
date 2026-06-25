@@ -20,7 +20,7 @@ public class Przetwarzacz {
     private Trasa[] trasy;
     private Sportowiec[] sportowcy;
 
-    public void przetworz(WezelDTO[] dto) {
+    private void przetworzWezly(WezelDTO[] dto) {
         wezly = new Wezel[dto.length];
         for (int i = 0; i < dto.length; i++) {
             WezelDTO d = dto[i];
@@ -28,8 +28,10 @@ public class Przetwarzacz {
         }
     }
 
-    public void przetworz(WyciagDTO[] dto) {
-        assert wezly != null : "Najpierw przetworz wezly";
+    private void przetworzWyciagi(WyciagDTO[] dto) {
+        if (wezly == null){
+            throw new RuntimeException("Zła kolejność przetwarzania wejścia");
+        }
         wyciagi = new Wyciag[dto.length];
         for (int i = 0; i < dto.length; i++) {
             WyciagDTO d = dto[i];
@@ -42,8 +44,10 @@ public class Przetwarzacz {
         }
     }
 
-    public void przetworz(TrasaDTO[] dto) {
-        assert wezly != null : "Najpierw przetworz wezly";
+    private void przetworzTrasy(TrasaDTO[] dto) {
+        if (wezly == null){
+            throw new RuntimeException("Zła kolejność przetwarzania wejścia");
+        }
         trasy = new Trasa[dto.length];
         for (int i = 0; i < dto.length; i++) {
             TrasaDTO d = dto[i];
@@ -57,8 +61,10 @@ public class Przetwarzacz {
         }
     }
 
-    public void przetworz(GrupaSportowcowDTO[] dto) {
-        assert wezly != null : "Najpierw przetworz wezly";
+    private void przetworzSportowcow(GrupaSportowcowDTO[] dto) {
+        if (wezly == null){
+            throw new RuntimeException("Zła kolejność przetwarzania wejścia");
+        }
 
         int total = 0;
         for (GrupaSportowcowDTO g : dto) total += g.liczba();
@@ -89,6 +95,16 @@ public class Przetwarzacz {
                 czasPrzyjazdu = Czas.dodaj(czasPrzyjazdu, odstep);
             }
         }
+    }
+
+    public void przetworzWszystko(WezelDTO[] wezelDTO,
+                                  WyciagDTO[] wyciagDTO,
+                                  TrasaDTO[] trasaDTO,
+                                  GrupaSportowcowDTO[] grupaDTO){
+        przetworzWezly(wezelDTO);
+        przetworzWyciagi(wyciagDTO);
+        przetworzTrasy(trasaDTO);
+        przetworzSportowcow(grupaDTO);
     }
 
     public Wezel[] dajWezly() { return wezly; }

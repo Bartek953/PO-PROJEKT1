@@ -7,6 +7,7 @@ import pl.projekt.sportowcy.Sportowiec;
 import pl.projekt.zdarzenia.Priorytet;
 import pl.projekt.zdarzenia.Zdarzenie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ZdarzenieUstawienieWKolejce extends ZdarzenieRaportowe {
@@ -28,6 +29,6 @@ public class ZdarzenieUstawienieWKolejce extends ZdarzenieRaportowe {
 
         wyciag.dodajDoKolejki(czas(), sportowiec());
 
-        return null;
+        return new ArrayList<>();
     }
 }

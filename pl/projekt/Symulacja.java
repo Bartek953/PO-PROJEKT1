@@ -40,10 +40,12 @@ public class Symulacja {
         SkanerSymulacji skaner = new SkanerSymulacji();
         Przetwarzacz przetwarzacz = new Przetwarzacz();
 
-        przetwarzacz.przetworz(skaner.wczytajWezly());
-        przetwarzacz.przetworz(skaner.wczytajWyciagi());
-        przetwarzacz.przetworz(skaner.wczytajTrasy());
-        przetwarzacz.przetworz(skaner.wczytajGrupySportowcow());
+        przetwarzacz.przetworzWszystko(
+                skaner.wczytajWezly(),
+                skaner.wczytajWyciagi(),
+                skaner.wczytajTrasy(),
+                skaner.wczytajGrupySportowcow()
+        );
 
         listaWezlow = przetwarzacz.dajWezly();
         listaWyciagow = przetwarzacz.dajWyciagi();
@@ -109,7 +111,7 @@ public class Symulacja {
         tworcaMapek.tworzMapkeStatystyk(listaWezlow, listaTras, listaWyciagow);
         for (Sportowiec sportowiec : listaSportowcow){
             if (sportowiec.sledzony()){
-                tworcaMapek.tworzMapeSportowca(sportowiec, listaWezlow, listaTras, listaWyciagow);
+                tworcaMapek.tworzMapkeSportowca(sportowiec, listaWezlow, listaTras, listaWyciagow);
             }
         }
     }

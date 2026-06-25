@@ -20,6 +20,6 @@ public abstract class ZdarzenieRaportowe extends ZdarzenieSportowca {
         if (sportowiec().sledzony()){
             System.out.println(raportuj());
         }
-        return null;
+        return new ArrayList<>();
     }
 }

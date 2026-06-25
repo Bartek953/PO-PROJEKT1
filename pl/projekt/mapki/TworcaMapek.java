@@ -120,6 +120,8 @@ public class TworcaMapek {
         return opis;
     }
     private ArrayList<String> statystycznyOpisWyciagu(Wyciag wyciag){
+        wyciag.aktualizujSredniaNaKoniec();
+
         ArrayList<String> opis = new ArrayList<>();
         opis.add(String.format(
                 "w%d: kol: %d(śr), %d(maks)",
@@ -150,7 +152,7 @@ public class TworcaMapek {
         wynik.add(opis);
         return wynik;
     }
-    public void tworzMapeSportowca(Sportowiec sportowiec, Wezel[] listaWezlow, Trasa[] listaTras, Wyciag[] listaWyciagow)
+    public void tworzMapkeSportowca(Sportowiec sportowiec, Wezel[] listaWezlow, Trasa[] listaTras, Wyciag[] listaWyciagow)
                                                                                             throws WyjatekSystemuPlikow {
         if (!sportowiec.sledzony()){
             throw new RuntimeException("Nieśledzony sportowiec wywołał metodę sportowca śledzonego");

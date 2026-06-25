@@ -93,9 +93,13 @@ public class Wyciag extends Polaczenie{
         return (int)(100L * liczbaPrzejazdow() / potencjalLiczbyPrzewiezionych);
     }
 
+    public void aktualizujSredniaNaKoniec(){
+        aktualizujSrednia(czasZamkniecia);
+    }
+
     @Override
     public String statystyki(){
-        aktualizujSrednia(czasZamkniecia);
+        aktualizujSredniaNaKoniec();
         return String.format("Statystyki wyciągu nr %d:\n" +
                         "1) Maksymalna długość kolejki: %d\n" +
                         "2) Średnia długość kolejki: %.2f\n" +
