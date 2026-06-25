@@ -29,6 +29,12 @@ public class Trasa extends Polaczenie {
         return odpornosc;
     }
 
+
+    // Wartość zdefiniowana na forum.
+    public double wyrownanieNawierzchni(){
+        return Math.pow(odpornosc, liczbaPrzejazdow());
+    }
+
     // [0, 1]
     public double atrakcyjnoscNawierzchni(){
         return bazowaAtrakcyjnosc + (1 - bazowaAtrakcyjnosc) * Math.pow(odpornosc, liczbaPrzejazdow());
@@ -39,7 +45,7 @@ public class Trasa extends Polaczenie {
         return String.format("Statystyki trasy nr %d:\n" +
                         "1) Łączna liczba zjazdów: %d\n" +
                         "2) Wyrównanie nawierzchni na koniec dnia to: %.2f\n",
-                numer(), liczbaPrzejazdow(), atrakcyjnoscNawierzchni());
+                numer(), liczbaPrzejazdow(), wyrownanieNawierzchni());
     }
 
     @Override

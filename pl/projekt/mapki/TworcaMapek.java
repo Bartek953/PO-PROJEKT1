@@ -113,6 +113,8 @@ public class TworcaMapek {
                 "t%d: śnieg: %.2f",
                 trasa.numer(), trasa.atrakcyjnoscNawierzchni()
         ));
+        // atrakcyjnoscNawierzchni() nie wyrownanieNawierzchni(),
+        // bo w tresci jest tutaj mowa o atrakcyjnosci zwiazanej z wyrownaniem nawierzchnii.
         opis.add(String.format(
                 "zjazdy: %d",
                 trasa.liczbaPrzejazdow()
